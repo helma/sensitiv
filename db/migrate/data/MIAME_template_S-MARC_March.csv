@@ -1,0 +1,32 @@
+,,,,,,,,,,,,,
+"MIAME compliant information for SCIBLU MARC customer expression array projects",,,,,,,,,,,,,
+,,,,,,,,,,,,,
+"All bold typed rows are mandatory. Please add one sample per column. Add as many columns as you need.",,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,"Sample no 1","Sample no 2","Sample no 3","Sample no 4","Sample no 5","Sample no 6","Sample no 7","Sample no 8","Sample no 9","Sample no 10","Sample no 11","Sample no 12","Sample no 13"
+"Sample name",400,402,403,404,409,410,412,413,418,419,420,422,423
+"Sample type","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA"
+"Genus","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo"
+"Species","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens"
+"Strain/line","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Individual","Donor n°499","Donor n°499","Donor n°499","Donor n°499","Donor n°503","Donor n°503","Donor n°503","Donor n°503","Donor n°506","Donor n°506","Donor n°506","Donor n°506","Donor n°506"
+"Sample Provider","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv"
+"Sex","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Age","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Developmental State","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells"
+"Tissue","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Cell Type","monocyte","monocyte","monocyte","monocyte","monocyte","monocyte","monocyte","monocyte","monocyte","monocyte","monocyte","monocyte","monocyte"
+"Genetic Modifications","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Genetic Characteristics","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Disease State","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Reference to Clinical Data","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Growth Conditions","5% serum","5% serum","5% serum","5% serum","5% serum","5% serum","5% serum","5% serum","5% serum","5% serum","5% serum","5% serum","5% serum"
+"in vivo Treatments","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Tissue Harvesting Method","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Extract Method","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol"
+"Molecule Type","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA"
+"Amplification","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT"
+"Amount","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)"
+"Label","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin"
+"Label Incorporation","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT"

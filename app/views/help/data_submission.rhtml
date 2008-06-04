@@ -1,0 +1,39 @@
+<div id='main'>
+  <%= render :partial => "index" %>
+  <b><a name="submission">Data submission</a></b><p/>
+
+  <ul>
+    <li><b>New experiments</b><br/> 
+    Please provide basic experimental information according to the guidelines below and send the measurements either per email to <%= mail_to "helma@in-silico.de", "helma@in-silico.de" %> or on a CD/DVD per regular mail to <p/>
+        Christoph Helma <br/>
+        FDM/Inst. f. Physik <br/>
+        Hermann Herder Str. 3 <br/>
+        D-79104 Freiburg <br/>
+        Germany
+    <ol>
+      <li>Create a new experiment:<p/>
+      <%= image_tag "data-submission1.png", :width => "85%" %></li>
+      <li>Login with your workpackage-leader password<p/>
+      <%= image_tag "data-submission2.png", :width => "85%" %></li>
+      <li>Enter basic data for the experiment:</p>
+      <%= image_tag "data-submission3.png", :width => "85%" %></li>
+      <li>Add investigators for the experiment:<p/>
+      <%= image_tag "data-submission6.png", :width => "85%" %></li>
+      <li>Add experimental protocols:<p/>
+      <%= image_tag "data-submission8.png", :width => "85%" %><br/>
+      <%= image_tag "data-submission9.png", :width => "85%" %></li>
+      <li>Add samples (1 sample/replicate) for the experiment:<p/>
+      <%= image_tag "data-submission11.png", :width => "85%" %><br/>
+      <%= image_tag "data-submission12.png", :width => "85%" %></li>
+      <li>Send measurements (gene expressions, biomarkers, protein expressions, ...) per email or regular mail to the database maintainers. Please make shure, that sample names are clearly identified for all measurements.
+
+    </ol>
+    </li><p/>
+    <li><b>Modification of existing experiments</b><br/> 
+    Go to "Experiments -> Edit" to modify existing experiments
+    </li>
+  </ul>
+
+  More questions? Please read the <%= link_to "General Usage", :action => "general_usage" %> part, submit a <%= link_to "bug report or feature request", :action => "tickets" %> or contact <a href='mailto:helma@in-silico.de'>helma@in-silico.de</a> deirectly.
+  </ol>
+</div>

@@ -1,0 +1,17 @@
+<h4>Physico-chemical properties of
+  <%= @record.compound.name -%> [ <%= @record.compound.cas -%> ]&nbsp;&nbsp;&nbsp;&nbsp; 
+  <%= link_to as_('Edit'), params_for(:action => 'edit')%>
+</h4>
+<%= render :partial => 'show_columns', :locals => {:columns => active_scaffold_config.show.columns} -%>
+
+
+<p class="form-footer">
+<table>
+  <tr>
+    <td><%= button_to 'Back to compound list', :controller => 'compounds', :action => 'list', :class => 'cancel' %></td>
+    <td><%= button_to as_('Back to training compounds'), params_for(:controller => 'compounds', :action => 'training_set'), :class => 'cancel' %></td>
+    <td><%= button_to 'Back to ' + @record.compound.name, :controller => 'compounds', :action => 'show', :id => @record.compound.id , :class => 'cancel' %></td>
+    <td><%= loading_indicator_tag(:action => :create, :id => params[:id]) %></td>
+  </tr>
+</table>
+</p>

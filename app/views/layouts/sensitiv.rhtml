@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+	<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Sens-it-iv Internal Website</title>
+    <%= javascript_include_tag :defaults %>
+		<%= active_scaffold_includes %>
+    <%= stylesheet_link_tag 'style', :plugin => "opentox" %>
+	</head>
+
+	<body>
+
+		<div id='logo'>
+			<%= image_tag("logo_sens-it-iv.jpg", :size => "147x54" )%>
+		</div>
+
+		<div id='nav'>
+			<ul>
+				<li<%= controller.controller_name  == 'home'  && controller.action_name == 'index' ? " id='sel'" : '' %>><%= link_to 'Home', :controller => 'home', :action => 'index'%></li>
+				<li<%= controller.controller_name  == 'website' ? " id='sel'" : '' %>><%= link_to "Internal website", :controller => 'home', :action => 'website'%></li>
+        <!--
+				<li<%= controller.controller_name  == 'forum' ? " id='sel'" : '' %>><%= link_to "Forum", :controller => 'home', :action => 'forum'%></li>
+        -->
+				<li<%= controller.controller_name  == 'protocols' ? " id='sel'" : '' %>><%= link_to "Protocols", :controller => 'protocols', :action => 'index'%></li>
+				<li<%= controller.controller_name  == 'experiments' ? " id='sel'" : '' %>><%= link_to "Experiments", :controller => 'experiments', :action => 'index'%></li>
+				<li<%= controller.controller_name  == 'compounds' ? " id='sel'" : '' %>><%= link_to "Compounds", :controller => 'compounds', :action => 'index'%></li>
+				<li<%= controller.controller_name  == 'questionnaire' ? " id='sel'" : '' %>><%= link_to "Questionnaire", :controller => 'questionnaire', :action => 'index'%></li>
+        <!--
+				<li<%= controller.controller_name  == 'query' ? " id='sel'" : '' %>><%= link_to "Data analysis", :controller => 'query', :action => 'form'%></li>
+				<li<%= controller.controller_name  == 'raw_data' ? " id='sel'" : '' %>><%= link_to "Raw Data", :controller => 'raw_data', :action => 'index'%></li>
+				<li><%= link_to "Bug reports and feature requests", "http://www.opentox.org/projects/sens-it-iv/tickets/"%></li>
+        -->
+				<li<%= controller.controller_name  == 'help' ? " id='sel'" : '' %>><%= link_to "Help", :controller => 'help', :action => 'index'%></li>
+
+			</ul>
+      <hr/>
+		</div>
+
+      <%= @content_for_layout %>
+
+	</body>
+
+</html>

@@ -1,0 +1,30 @@
+<% form_tag (:action => :submit) do %>
+<table>
+  <tr>
+    <th></th>
+    <th>Selection A</th>
+    <th>Selection B</th>
+  </tr>
+  <% @properties.each do |c| %>
+  <% unless @options[c].size == 1 %>
+  <tr>
+    <th><%= c.to_s.underscore.humanize %></th>
+    <% cl = Hash.new %>
+    <% cl["A"] = "inactive" %>
+    <% cl["B"] = "active" %>
+    <% ["A","B"].each do |g| %>
+    <td class="<%= cl[g] %>">
+
+      <%= select_tag(g+"["+c.to_s+"]", options_for_select(@options[c],@selection[g][c.to_s]))%>
+    </td>
+    <% end %>
+  </tr>
+  <% end %>
+  <% end %>
+  <tr>
+    <td colspan=3 align="center">
+    <%= submit_tag "Display interactions of differentially expressed genes" %>
+    </td>
+  </tr>
+</table>
+<% end %>

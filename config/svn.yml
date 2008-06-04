@@ -1,0 +1,4 @@
+data:
+
+plugins:
+  - "svn://www.in-silico.de/opentox/plugins/opentox/trunk"

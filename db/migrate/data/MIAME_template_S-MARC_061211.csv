@@ -1,0 +1,32 @@
+,,,,,,,,,,,,
+"MIAME compliant information for SCIBLU MARC customer expression array projects",,,,,,,,,,,,
+,,,,,,,,,,,,
+"All bold typed rows are mandatory. Please add one sample per column. Add as many columns as you need.",,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,"Sample no 1","Sample no 2","Sample no 3","Sample no 4","Sample no 5","Sample no 6","Sample no 7","Sample no 8","Sample no 9","Sample no 10","Sample no 11","Sample no 12"
+"Sample name",1744,1748,1751,1755,1774,1776,1824,1825,1826,"1827a","1827b","1827c"
+"Sample type","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA"
+"Genus","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo","Homo"
+"Species","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens","Homo sapiens"
+"Strain/line","N/A","N/A","N/A","N/A","N/A","N/A","MUTZ-3","MUTZ-3","MUTZ-3","MUTZ-3","MUTZ-3","MUTZ-3"
+"Individual","Donor n°490","Donor n°490","Donor n°499","Donor n°499","Donor n°504","Donor n°504","N/A","N/A","N/A","N/A","N/A","N/A"
+"Sample Provider","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv","Cosmital / Sens-it-iv"
+"Sex","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Age","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Developmental State","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells","Immature dentritic-like cells",,,,,,
+"Tissue","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Cell Type","monocyte","monocyte","monocyte","monocyte","monocyte","monocyte","acute myelomonocytic leukemia","acute myelomonocytic leukemia","acute myelomonocytic leukemia","acute myelomonocytic leukemia","acute myelomonocytic leukemia","acute myelomonocytic leukemia"
+"Genetic Modifications","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Genetic Characteristics","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Disease State","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Reference to Clinical Data","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Growth Conditions","5% serum","5% serum","5% serum","5% serum","5% serum","5% serum","20% serum","20% serum","20% serum","20% serum","20% serum","20% serum"
+"in vivo Treatments","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Tissue Harvesting Method","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A"
+"Extract Method","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol","TriZol"
+"Molecule Type","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA","total RNA"
+"Amplification","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT","two-cycle IVT"
+"Amount","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)","(added by Swegene MARC)"
+"Label","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin","Phycoerythrin via Biotin-Streptavidin"
+"Label Incorporation","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT","IVT"

@@ -1,0 +1,67 @@
+<div id='main'>
+  <%= render :partial => "index" %>
+  <b><a name="general">General usage</a></b>	
+
+  <ol>
+    <li><a href="#browser">Browser independent problems</a></li>	
+    <li><a href="#ie">Microsoft Internet Explorer</a></li>	
+    <li><a href="#internal">Internal website</a></li>
+  </ol>
+
+    <ul>
+      <li>Make sure you have a recent browser version (if you are using Internet Explorer at least <a href="http://www.microsoft.com/downloads/">version 6</a>). The preferred browser for this website is <a href="http://www.mozilla-europe.org/" target="_blank">Mozilla Firefox</a>. It is modern and robust and can be fully configured without administrative privileges.</li>
+      <li>Make sure you have <a href="http://www.google.com/cookies.html" target="_blank">cookies enabled</a>.</li>
+    </ul>
+    <p/>
+	
+    <ol>
+      <li><b><a name="browser">Browser independent problems</a></b>	
+      <ul>
+        <li><i>Question:</i> I receive a warning about untrusted certificates when entering the site.<br>
+            <i>Answer:</i> This is unavoidable. We use Secure Socket Layer (SSL) to encrypt data exchange between your browser and our server, but we cannot afford registering our certificate with a trusted authority.</li>
+      </ul>
+      </li>
+      <p/>
+
+      <li><b><a name="ie">Microsoft Internet Explorer</a></b>	
+      <br/> <b>SSL</b>		
+      <ul>
+        <li><i>Question:</i> I am frequently asked whether I want to display non-secure items. This is annoying!<br>
+            <i>Answer:</i> This happens if the code contains references to objects not reachable from within the ssl domain. Go to Tools --> Internet Options --> Security --> Custom Level --> Miscellaneous and enable 'Display Mixed Content' or complain to the IE programmers.</li>
+      </ul>
+      <br/> <b>Document download</b>		
+      <ul>
+        <li><i>Question:</i> When I left-click a link to a PDF file, a blank page appears and/or my computer freezes.<br>
+            <i>Answer:</i> Your Adobe Reader installation may be corrupt. Try reinstalling Adobe Reader. This may require administrative privileges.</li>
+        <li><i>Question:</i> I reinstalled Adobe Reader but this did not resolve the problem!<br>
+            <i>Answer:</i> PDF files may be large. If you wait long enough, the PDF viewer should eventually appear. However, you can switch off displaying the PDF file by default, letting you choose whether you want to display or save the file:
+          <ul>
+            <li>Go to My Computer</li>
+            <li>Go to the Tools menu and choose Folder Options</li>
+            <li>Go to the File Types tab</li>
+            <li>Scroll down to the File Extension that you want to change (PDF)</li>
+            <li>Click on the Advanced button</li>
+            <li>Checkmark "Confirm Open after Download"</li>
+          </ul>		
+          This may require administrative privileges. If this does not resolve your problems, consider using <a href="http://www.mozilla-europe.org/" target="_blank">Mozilla Firefox</a>.</li>
+        <li><i>Question:</i> When I try to use right-click and 'Save target as...' on a link an error message about forbidden access appears!<br>
+            <i>Answer:</i> This is unavoidable. Internet Explorer does not send a necessary little piece of information (called 'referer') with this method. This happens at least for links to DOC, PDF and PPT files.</li>
+        </ul>
+      </ul>
+      </li>
+      <p/>
+      Still issues? Please mail to <a href="mailto:maunza@fdm.uni-freiburg.de">maunza@fdm.uni-freiburg.de</a>.
+
+      <li><b><a name="internal">Internal website</a></b>
+      <ul>
+        <li><i>Question:</i> I have problems with the Internal Website or the Forum. Who is the contact person?<br/>
+        <i>Answer:</i> Please ask Augusta Thorbecke (<a href='mailto:sens-it-iv@planet.nl'>sens-it-iv@planet.nl</a>)
+      </ul>
+      </li>
+      </ol>
+    </li>
+    <p/>
+
+    More questions? Please contact <a href='mailto:helma@in-silico.de'>helma@in-silico.de</a>.
+  </ol>
+</div>

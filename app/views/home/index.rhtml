@@ -1,0 +1,68 @@
+<div id='main'>
+	<h2>Welcome to Sens-it-iv!</h2>
+	With the links in the titlebar you can reach the following sections of the internal website and database:
+
+	<ul>
+			<li><%= link_to 'Home', :controller => 'home', :action => 'index'%>: This page</li>
+			<li><%= link_to "Internal Website", :controller => 'home', :action => 'website'%>: Documents for project members (Administrator: <a href='mailto:sens-it-iv@planet.nl'>A. Thorbecke</a>) </li>
+<!--
+			<li><a href="https://sens-it-iv-internal.org/phpbb">Forum</a>: For the discussion of Sens-it-iv topics (Administrator: <a href='mailto:sens-it-iv@planet.nl'>A. Thorbecke</a>) </li>
+-->
+			<li><%= link_to "Protocols", :controller => 'protocols', :action => 'index' %>: Read and submit Standard Operating Procedures</li>
+			<li><%= link_to "Experiments", :controller => 'experiments', :action => 'index' %>: Browse, search and submit experimental data. </li>
+			<li><%= link_to "Compounds", :controller => 'compounds', :action => 'index'%>: Information about chemicals for the Sens-it-iv project. 
+				<ul>
+          <li><%= link_to "Skin Sensitisation Database", :controller => 'compounds', :action => 'list' , :show => 'all'%> with 211 compounds</li>
+          <li><%= link_to "Training Compounds", :controller => 'compounds', :action => 'list', :show => 'training_set' %> Information about reference compounds (e.g. biological activities, solubility, toxicity)</li>
+				</ul>
+			</li>
+			<li><%= link_to "Questionnaire", :controller => 'questionnaire', :action => 'index'%>: Input for the further development of the internal database</li>
+<!--
+      <li><%= link_to "Data Analysis", :controller => 'query', :action => 'form'%>: Very experimental data analysis faciltities.</li>
+			<li><%= link_to "Raw Data", :controller => 'raw_data', :action => 'index' %>: Read and submit data of any format (also useful for backups)</li>
+-->
+			<li><%= link_to "Help", :controller => 'help', :action => 'index'%>: Frequently asked questions (and answers) about the internal Sens-it-iv site. Please read them, if you have problems with the website. If this does not help, you can submit a <%= link_to "bug report or feature request", "http://www.opentox.org/projects/sens-it-iv/tickets/"%> (use the general Sens-it-iv password for login).</li>
+	</ul>
+
+The documents on these pages are accessible to all Sens-it-iv members, but only workpackage leaders are allowed to modify the content of their workpackage. In case of troubles, please read the <%= link_to "help", :controller => 'help', :action => 'index'%> section first and contact <a href='mailto:helma@in-silico.de'>helma@in-silico.de</a> if you cannot find a solution.
+</div>
+<div id='main'>
+	<h2>News</h2>
+    <dl>
+      <dt>08/06/04<dd>
+      Questionnaire added<br/>
+      <dt>08/04/24<dd>
+      More experimental data added<br/>
+      Treatments added<br/>
+      Several bugfixes and improvements<br/>
+      <dt>08/04/18<dd>
+      Better integration of chemical and experimental information<br/>
+      Improved search facilities<br/>
+      New internal database structure<br/>
+      Data analysis temporarily disabled
+      <dt>08/03/17<dd>Auditing by WP leaders enabled<br/>
+      Data submission by group leaders enabled<br/>
+      <dt>08/03/06<dd>Updated to latest Opentox version<br/>
+      Display of disconnected structures enabled<br/>
+      <dt>07/10/15<dd>Experimental data analysis faciltities<br/>
+      Improved data submission<br/>
+      Improved help system with detailled guidelines for data submission<br/>
+      <dt>07/09/28<dd>Ticketing system for bug reports and feature requests<br/>
+      Background correction, normalisation and prefiltering of gene expressions<br/>
+      <dt>07/09/26<dd>Gene expressions added<br/>
+      <dt>07/09/18<dd>Cell lines/types added<br/>
+      Editing features enabled<br/>
+      <dt>07/08/29<dd>Improved structure display<br/>
+      Forum and raw data links disabled<br/>
+      Internal database generalisation to comply with the <%= link_to 'OpenTox', "http://www.opentox.org"%> project<br/>
+      <dt>07/07/25<dd>Data submission forms<br/>
+      <dt>07/07/18<dd>Database reorganisation<br/>
+      <dt>07/07/12<dd>Structure editor <br/>
+      <dt>07/07/10<dd>New user interface <br/>
+      Training compounds <br/>
+      Initial import of gene expression data
+      <dt>07/06/19<dd>Extended FAQs
+      <dt>07/06/15<dd>Simple search facilities for compounds
+      <dt>07/05/23<dd>Internal database reimplemented with <%= link_to "Ruby on Rails", "http://www.rubyonrails.org/" %> 
+    </dl>
+</div>

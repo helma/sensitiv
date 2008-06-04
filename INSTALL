@@ -1,0 +1,64 @@
+INSTALLATION
+
+apt-get install 
+	sqlite3
+	java-jdk
+	libsqlite3-dev
+	ruby >= 1.8.4
+	rubygems
+
+gem install 
+	rake
+	sqlite3-ruby
+	rino
+
+set $JAVA_HOME (see also rjb website)
+gem install 
+	rjb 
+
+We experienced problems on Ubuntu with ruby 1.8.5 repository version. Had to install ruby 1.8.6 and rubygems 0.9.4 manually.
+
+If you use SSL to secure the server, add the following iptables rule to avoid direct connections to port 8000 (from the outside only):
+iptables -A INPUT -p tcp --dport 8000 -i ! lo -j REJECT
+
+copy public/file_document
+copy/create db/development.sqlite3
+set JAVA_HOME (/usr/lib/jvm/java-1.5.0-sun) in config/environment.rb
+rake opentox:compile_java
+
+#gem install xml-simple
+#gem install rcdk
+set JAVA_HOME and LD_LIBRARY_PATH before starting mongrel
+/var/lib/gems/1.8/bin/mongrel_rails start -p 8000 -e production
+install libapache2-mod-proxy-html
+enable proxies in apache
+ a2enmod proxy
+ a2enmod proxy_http
+ a2enmod headers
+configure apache
+	Check that you have something like this in your httpd.conf:
+
+	<Proxy *>
+		Order allow,deny
+		Allow from all
+	</Proxy>
+
+	In Debian and Ubuntu, this is set to deny by default in /etc/apache2/mods-available/proxy.conf. 
+
+	On Debian etch (and Ubuntu) look at /etc/apache2/mods-available/proxy.conf:
+
+
+	AddDefaultCharset off
+	Order deny,allow
+	Deny from all
+	#Allow from .example.com
+
+	Rather than override that, add this to your Mongrel cluster proxy definition (along with the 127.0.0.1 lines:
+
+
+	Order allow,deny
+	Allow from all
+
+	Problem solved
+
+before starting Webbrick (mongrel also??) (setting in environment.rb does not help)

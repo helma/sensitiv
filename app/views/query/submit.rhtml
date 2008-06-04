@@ -1,0 +1,34 @@
+<div class="active-scaffold">
+
+  <%= render :partial => "select" %>
+
+  <%= image_tag("neato.png", :usemap => "#G")%>
+  <%= render :file =>"../../public/images/neato.map" %>
+
+  <h2>Disconnected significant genes</h2>
+
+  <table>
+    <th>Entrez ID</th><th>fold change (class1/class2)</th><th>percentage of false predictions</th><th>P.value</th>
+  <% @disconnected.each do |row| %>
+  <tr>
+  <% i =0 %>
+  <% row.each do |c| %>
+  <% if [0,3,4,5].include?(i) %>
+  <td><%= c %></td>
+  <% end %>
+  <% i+=1 %>
+  <% end %>
+  </tr>
+  <% end %>
+  </table>
+
+  <h2>Protocols</h2>
+
+  <dl>
+    <dt>Identification of relevant genes</dt>
+    <dd> Differentially expressed genes are identified with the <%= link_to "Rank Product", "http://www.febsletters.org/article/PIIS0014579304009354/abstract" %> method using the <%= link_to "R/Bioconductor","http://bioconductor.org/"%> <%= link_to "RankProd", "http://bioconductor.org/packages/2.0/bioc/html/RankProd.html" %> implementation. A <%= link_to "comparison", "http://www.biomedcentral.com/1471-2105/7/359"%> shows that rank products perform well for datasets with low sample numbers and high levels of noise.</dd>
+    <dt>Human interactome</dt>
+    <dd>Differentially expressed genes with a p value &gt; 0.01 are identified in the human interaction data kindly provided by <%= mail_to "Andrew.Garrow@unilever.com", "Andrew Garrow" %> (Unilever - Safety &amp; Environment Assurance Centre). It was created through an integration of PSI-MI XML files from IntAct, HPRD, MINT, BIND, DIP, Reactome and NetPath. The <%= link_to "Graphviz", "http://www.graphviz.org/" %> neato program is used for pathway layout and visualisation.</dd>
+  </dl>
+
+</div>
