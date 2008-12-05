@@ -4,27 +4,35 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-#RAILS_GEM_VERSION = '2.0.2'
+RAILS_GEM_VERSION = '2.1'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 
-# load gems from vendor/gems
-#config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
-#    File.directory?(lib = "#{dir}/lib") ? lib : dir
-#end
+
+# R and Java configuration files 
+require "R.rb"
+require "java.rb"
 
 Rails::Initializer.run do |config|
-  config.plugins = [:engines, :opentox,  :all]
+  config.plugins = [:engines, :opentox, :all]
+  # load gems from vendor/gems
+  config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
+      File.directory?(lib = "#{dir}/lib") ? lib : dir
+  end
+
+  config.load_paths += %W( #{RAILS_ROOT}/vendor/src/rubygems/lib )
   # Settings in config/environments/* take precedence those specified here
-  #config.action_controller.session = { :session_key => "_myapp_session", :secret => "dsftrJKJdsipP" }
+  config.action_controller.session = { :session_key => "_myapp_session", :secret => "5088f3e9d90958b1a8d2f5832f00e8ed" }
   
   # Skip frameworks you're not going to use (only works if using vendor/rails)
   # config.frameworks -= [ :action_web_service, :action_mailer ]
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
+  config.load_paths += %W( #{RAILS_ROOT}/vendor/bin )
+  config.load_paths -= %W( /usr/local/ )
 
   # Force all environments to use the same logger level 
   # (by default production uses :info, the others :debug)
@@ -32,8 +40,7 @@ Rails::Initializer.run do |config|
 
   # Use the database for sessions instead of the file system
   # (create the session table with 'rake db:sessions:create')
-  # config.action_controller.session_store = :active_record_store
-  config.action_controller.session_store = :memory_store
+  config.action_controller.session_store = :active_record_store
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper, 
@@ -47,7 +54,9 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
   
   # See Rails::Configuration for more options
-	config.action_mailer.raise_delivery_errors = true
+
+	#config.action_mailer.delivery_method = :smtp
+	#config.action_mailer.raise_delivery_errors = true
 end
 
 # Add new inflection rules using the following format 
@@ -60,8 +69,13 @@ end
 # end
 
 # Include your application configuration below
-require 'config/java.rb'
-ENV['R_HOME']=`R cmd BATCH RHOME`.chomp
-ENV['CLASSPATH'] = "#{RAILS_ROOT}/vendor/plugins/opentox/lib/java/:#{RAILS_ROOT}/vendor/plugins/opentox/lib/java/cdk-1.0.1.jar"
-ExceptionNotifier.exception_recipients = %w(helma@in-silico.de)
-ExceptionNotifier.sender_address = %("Application Error" <helma@in-silico.de>)
+
+ENV['CLASSPATH'] = "#{RAILS_ROOT}/vendor/plugins/opentox/lib/java/:#{RAILS_ROOT}/vendor/plugins/opentox/lib/java/cdk-1.1.svn-19012008.jar"
+ENV['PATH'] =  "#{RAILS_ROOT}/vendor/bin:" + ENV['PATH']
+ENV['GEM_HOME'] = "#{RAILS_ROOT}/vendor/lib/ruby/gems/1.8"
+ENV['GEM_PATH'] = "#{RAILS_ROOT}/vendor/lib/ruby/gems/1.8"
+ENV['RUBY'] = "#{RAILS_ROOT}/vendor/bin/ruby"
+
+#ExceptionNotifier.exception_recipients = %w(helma@in-silico.de)
+# defaults to exception.notifier@default.com
+#ExceptionNotifier.sender_address = %("Application Error" <helma@in-silico.de>)

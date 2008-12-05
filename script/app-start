@@ -1,0 +1,22 @@
+#!/bin/sh
+
+case "$1" in
+	development)
+		export RAILS_ENV=$1
+		port=3000
+		;;
+	staging)
+		export RAILS_ENV=production
+		port=9000
+		;;
+	production)
+		export RAILS_ENV=production
+		port=8010
+		;;
+	*)
+		echo "unknown environment $1 - exiting."
+		exit 1
+esac
+
+vendor/bin/rake lazar:daemon:start 
+vendor/bin/thin start -e $RAILS_ENV -p $port -d

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# external plugins
+mkdir -p $plugin_dir
+cd $plugin_dir
+git clone $git_url/engines.git engines #2.1.0 # stay at master to fix Dependencies is not a module (TypeError) 
+git clone $git_url/active_scaffold.git active_scaffold
+git clone $git_url/file_column.git file_column
+git clone $git_url/exception_notification.git exception_notification
+cd $app_dir
+
+# create haml plugin
+vendor/bin/haml --rails .

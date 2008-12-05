@@ -1,0 +1,82 @@
+#!/bin/bash
+
+if [ ! $1 ]
+then
+	branch=`git branch | grep \* | sed 's/^* //'`
+	echo "no branch defined - using current branch '$branch'"
+else
+	branch=$1
+fi
+
+if ! git branch | grep $branch
+then
+	echo "unknown branch $branch ... exiting"
+	exit 
+fi
+
+export RAILS_ROOT=`pwd`
+source script/install/variables
+git_url=http://opentox.org/git/ch
+
+mkdir -p $bin_dir
+mkdir -p $plugin_dir
+
+# did we call app-install or app-upgrade
+if echo $0 | grep app-install
+then
+	# install dependencies and set JAVA_HOME
+	source script/install/dependencies
+	source script/java-home
+else
+	url=`cat .git/config | grep url | sed 's/url =//' | tr -d ' 	'`
+	# get updates
+	echo "Updating application in $app_dir"
+	#						origin version destination 
+	git_install $url   $branch $app_dir
+fi
+
+# install programs and libraries
+#						origin                           version    destination        post installation hook
+git_install $git_url/ruby.git                1.8.6-p287 $src_dir/ruby      script/install/ruby      # ruby
+
+# rubygems
+if [ ! -f $gem ]
+then
+git_install $git_url/rubygems.git            1.2.0      $src_dir/rubygems  script/install/rubygems  
+fi
+# get the latest version
+$gem update --system
+
+git_install  	 git://github.com/rails/rails.git               2-1-stable vendor/rails              # rails
+git_install $git_url/R.git                   2.7.1      $r_home            script/install/R         # R
+git_install $git_url/openbabel.git           2.2.0      $src_dir/openbabel script/install/openbabel # openbabel
+
+$ruby config/java.rb # read JAVA_HOME 
+
+# install gems
+#           gem          version options
+gem_install rake         0.8.3 
+gem_install sqlite3-ruby 1.2.4
+gem_install statarray    0.0.1
+gem_install haml         2.0.3
+gem_install thin         1.0.0
+gem_install rjb          1.1.6
+gem_install rsruby       0.5     "-- --with-R-dir=$r_home"
+gem_install roo          1.2.1
+
+# create haml plugin
+rm -rf vendor/plugins/haml && vendor/bin/haml --rails .
+
+# install rails plugins
+#						origin                              version          destination        
+git_install $git_url/engines.git                rails-2-1-stable $plugin_dir/engines 
+git_install $git_url/active_scaffold.git        1.1.1            $plugin_dir/active_scaffold
+git_install $git_url/file_column.git            rails-2-1-stable $plugin_dir/file_column
+git_install $git_url/exception_notification.git rails-2-1-stable $plugin_dir/exception_notification
+
+
+# install opentox plugins
+#						origin                                             version     destination         post installation hook
+git_install git://github.com/helma/opentox-plugin.git          production $plugin_dir/opentox script/install/opentox
+
+# data and validation results

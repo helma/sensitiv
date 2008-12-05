@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# get RAILS_ENV
+
+vendor/bin/thin stop
+vendor/bin/rake lazar:daemon:stop 

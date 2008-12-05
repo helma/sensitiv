@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# install rubygems
+cd $src_dir/rubygems
+$ruby setup.rb config --prefix=$prefix --no-rdoc --no-ri
+$ruby setup.rb setup
+$ruby setup.rb install

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# install R
+if ! $r_program --version | grep $version
+then
+	./configure --without-blas --enable-BLAS-shlib --enable-R-shlib --without-tcltk --without-x --without-readline
+	make
+	cp $r_home/bin/R $r_program 
+fi

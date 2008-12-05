@@ -1,4 +1,13 @@
 data:
+    - "svn://www.in-silico.de/opentox/data/cpdb080429/"
+    - "svn://www.in-silico.de/opentox/data/iris080215/"
+    - "svn://www.in-silico.de/opentox/data/kazius06/"
+    - "svn://www.in-silico.de/opentox/data/fda-human-liver/"
+    - "svn://www.in-silico.de/opentox/data/fdamdd080215/"
+    - "svn://www.in-silico.de/opentox/data/epafhm080215/"
+
+  
 
 plugins:
   - "svn://www.in-silico.de/opentox/plugins/opentox/trunk"
+  - "svn://www.in-silico.de/opentox/plugins/lazar/trunk"

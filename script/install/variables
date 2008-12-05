@@ -1,0 +1,67 @@
+#!/bin/bash
+
+app_dir=`pwd`
+prefix=$app_dir/vendor
+bin_dir=$prefix/bin
+src_dir=$prefix/src
+gem_dir=$prefix/lib/ruby/gems/1.8/gems
+plugin_dir=$prefix/plugins
+data_dir=$app_dir/public/data
+r_home=$prefix/R
+
+ruby=$bin_dir/ruby
+gem=$bin_dir/gem
+r_program=$bin_dir/R
+rake=$bin_dir/rake
+
+export PATH=$bin_dir:$PATH
+export R_HOME=$r_home
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$R_HOME/bin
+export GEM_HOME=$prefix/lib/ruby/gems/1.8
+export RUBY=$ruby
+
+function git_install {
+
+	url=$1            # git url
+	version=$2        # tag/branch
+	destination=$3    # destination directory
+	post_install=$4   # post installation script
+
+	# create initial repository
+	if [ ! -d $destination ]
+	then
+		echo "Cloning $url to $destination"
+		git clone $url $destination
+	fi
+	echo "updating $destination to version $version"
+	cd $destination
+	echo "pulling from remote repository $url"
+	git pull $url $version
+	# get the correct version
+	if  ! git branch | grep $version 
+	then
+		git checkout --track -b $version origin/$version
+	fi
+	# if we need to configure/compile ...
+	if [ $post_install ]
+	then
+		# execute installation script
+		echo "executing $post_install"
+		source $app_dir/$post_install
+	fi
+	cd $app_dir
+
+}
+
+function gem_install {
+
+	# $1: gem
+	# $2: version
+	# $3: options
+
+	if [ ! -d $gem_dir/$1-$2 ]
+	then
+		$gem install --no-rdoc --no-ri --bindir=$bin_dir $1 -v $2 $3
+	fi
+
+}

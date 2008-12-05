@@ -1,0 +1,17 @@
+#!/bin/bash
+# guess distribution and install dependencies
+
+if grep -q Debian /etc/issue
+then
+	sudo apt-get install sqlite3 libsqlite3-dev build-essential git-core wget sun-java5-jdk xvfb libssl-dev lsof libgsl0-dev libsqlite3-dev
+	sudo apt-get build-dep r-base
+	sudo apt-get build-dep openbabel
+elif grep -q Ubuntu /etc/issue
+then
+	sudo apt-get install sqlite3 libsqlite3-dev build-essential git-core wget sun-java6-jdk xvfb libssl-dev lsof libsqlite3-dev
+	sudo apt-get build-dep r-base
+	sudo apt-get build-dep openbabel
+else
+	dist=`cat /etc/issue|sed 's/\\n \\l//'`
+	echo "Installation of dependency packages for $dist not (yet) implemented. Please install sqlite3 (with development libraries), git, wget, java, gcc and fortran compiler with your package manager."
+fi

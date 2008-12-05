@@ -1,65 +1,23 @@
+2.sheet uebernehmen
+#organism part fehlt: check script
+#compounds fehlen: check script
+#dose falsch: check script
+#solvent fehlt:  check script
+#controls: check script
+#controls result == duration: check controller (only treatments anzeigen)
+#measurements checken
+
+compounds/bio-sample measurements als treatments?
+bei measurements treatment info anzeigen
+
+experiments info fehlt: form|excel sheet|allg infos
+investigators fehlen: form|excel sheet|allg infos
+units f measurements: fragen
+protocols fehlen: fragen
+biosource provider fehlt: fragen
+
+#excel datenuebernahme pruefen
+eingabe von experiments and persons
+
+costanza daten einfuegen
 francois daten einfuegen
-
-sensitiv installation
-	ruby version
-	sqlite3-ruby unwahrscheinlich
-	set JAVA_HOME and LD_LIBRARY_PATH before starting mongrel
-
-login f. svn:externals
-toxicity data
-
-data submission policy
-	submission by group leaders
-	audit by advisory group
-	automated (presence of control)
-
-data submission
-	neue person/organisation als bio source provider
-	compounds
-		auswahlliste aus training compounds
-		concentration (+unit)
-		solvent (vehicle)
-		exposure time
-
-protocols in chemical list
-
-seltsames login bei nested edits
-
-extend search facilities for all columns
-
-graphs trennen
-	multiple probe -> gene_id mappings
-		(aggregateExprs {PGSEA})
-resize image maps (with imagemagick, recalculate coordinates of mapfiles)
-query results darstellen
-query sanity check (# results, ...)
-tmp files
-	vor berechnung entfernen
-	unter session abspeichern
-	eliminieren
-
-phys/chem properties from PubChem
-	
-performance
-
-llna dags fixen
-visualisation
-individual results als input f llna
-
-bibliographic_references_generic_datas
-bibliographic_reference als option fuer protocol
-
-sensitiv
-	
-	experiments
-
-		biomarker experiments
-		!EC3_extrapolated ausrechnen
-
-		!incomplete submissions kennzeichnen
-
-	compounds
-		rake tasks f fehlerhafte/fehlende daten
-		!correct smiles f   	 1-Chloro-2,4-dinitrobenzene
-		!editing of disconnected structures
-
