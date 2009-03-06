@@ -16,7 +16,7 @@ require "R.rb"
 require "java.rb"
 
 Rails::Initializer.run do |config|
-  config.plugins = [:engines, :opentox, :all]
+  config.plugins = [:engines, :rchem, :all]
   # load gems from vendor/gems
   config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
       File.directory?(lib = "#{dir}/lib") ? lib : dir

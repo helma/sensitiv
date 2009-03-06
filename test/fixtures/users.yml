@@ -1,5 +1,5 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first:
   id: 1
-another:
-  id: 2
+  name: participantSII
+  hashed_password: e0ae8a195ea272877a4a146d7d8e2d3f

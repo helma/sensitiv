@@ -1,4 +1,35 @@
+validations for protocols
+	url exists
+	genau 1 x text/url/file
+	
+
+dateneingabe f training compounds
+	route?
+
+excel upload f neues template aktualisieren
+
+units f measurements eintragen
+protocols eintragen
+biosource provider eintragen
+
 2.sheet uebernehmen
+
+compounds/bio-sample measurements als treatments?
+bei measurements treatment info anzeigen
+
+
+eingabe von experiments and persons
+
+costanza daten einfuegen: per hand (=test)
+francois daten einfuegen
+
+home/index updaten
+exception handling
+
+done
+	helmas webseite als iframe einbetten
+	experiments info fehlt: form|excel sheet|allg infos
+	investigators fehlen: form|excel sheet|allg infos
 #organism part fehlt: check script
 #compounds fehlen: check script
 #dose falsch: check script
@@ -6,18 +37,4 @@
 #controls: check script
 #controls result == duration: check controller (only treatments anzeigen)
 #measurements checken
-
-compounds/bio-sample measurements als treatments?
-bei measurements treatment info anzeigen
-
-experiments info fehlt: form|excel sheet|allg infos
-investigators fehlen: form|excel sheet|allg infos
-units f measurements: fragen
-protocols fehlen: fragen
-biosource provider fehlt: fragen
-
 #excel datenuebernahme pruefen
-eingabe von experiments and persons
-
-costanza daten einfuegen
-francois daten einfuegen

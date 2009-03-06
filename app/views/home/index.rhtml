@@ -1,10 +1,9 @@
-<div id='main'>
+<div id='main' style="background-color:#ffffcc">
 	<h2>Welcome to Sens-it-iv!</h2>
-	With the links in the titlebar you can reach the following sections of the internal website and database:
+	What to expect:
 
 	<ul>
-			<li><%= link_to 'Home', :controller => 'home', :action => 'index'%>: This page</li>
-			<li><%= link_to "Internal Website", :controller => 'home', :action => 'website'%>: Documents for project members (Administrator: <a href='mailto:sens-it-iv@planet.nl'>A. Thorbecke</a>) </li>
+			<li><%= link_to "Internal Website", :controller => 'website', :action => 'index'%>: Documents for Sens-it-iv members (Administrator: <a href='mailto:sens-it-iv@planet.nl'>A. Thorbecke</a>) </li>
 <!--
 			<li><a href="https://sens-it-iv-internal.org/phpbb">Forum</a>: For the discussion of Sens-it-iv topics (Administrator: <a href='mailto:sens-it-iv@planet.nl'>A. Thorbecke</a>) </li>
 -->
@@ -16,16 +15,13 @@
           <li><%= link_to "Training Compounds", :controller => 'compounds', :action => 'list', :show => 'training_set' %> Information about reference compounds (e.g. biological activities, solubility, toxicity)</li>
 				</ul>
 			</li>
-			<li><%= link_to "Questionnaire", :controller => 'questionnaire', :action => 'index'%>: Input for the further development of the internal database</li>
-<!--
-      <li><%= link_to "Data Analysis", :controller => 'query', :action => 'form'%>: Very experimental data analysis faciltities.</li>
-			<li><%= link_to "Raw Data", :controller => 'raw_data', :action => 'index' %>: Read and submit data of any format (also useful for backups)</li>
--->
-			<li><%= link_to "Help", :controller => 'help', :action => 'index'%>: Frequently asked questions (and answers) about the internal Sens-it-iv site. Please read them, if you have problems with the website. If this does not help, you can submit a <%= link_to "bug report or feature request", "http://www.opentox.org/projects/sens-it-iv/tickets/"%> (use the general Sens-it-iv password for login).</li>
+
 	</ul>
 
-The documents on these pages are accessible to all Sens-it-iv members, but only workpackage leaders are allowed to modify the content of their workpackage. In case of troubles, please read the <%= link_to "help", :controller => 'help', :action => 'index'%> section first and contact <a href='mailto:helma@in-silico.de'>helma@in-silico.de</a> if you cannot find a solution.
+	Use the 'Questionnaire' and 'Help' buttons above for suggestions and issues regarding this website. Contact <a href="mailto:helma@in-silico.de">helma@in-silico.de</a> if you cannot find a solution to your problems.
+
 </div>
+<!--
 <div id='main'>
 	<h2>News</h2>
     <dl>
@@ -66,3 +62,4 @@ The documents on these pages are accessible to all Sens-it-iv members, but only 
       <dt>07/05/23<dd>Internal database reimplemented with <%= link_to "Ruby on Rails", "http://www.rubyonrails.org/" %> 
     </dl>
 </div>
+-->

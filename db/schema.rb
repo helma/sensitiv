@@ -9,34 +9,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081203160550) do
-
-  create_table "bibliographic_references", :force => true do |t|
-    t.string "text"
-  end
+ActiveRecord::Schema.define(:version => 20090227183042) do
 
   create_table "bio_samples", :force => true do |t|
     t.string  "name"
-    t.integer "bio_source_provider_id"
     t.integer "developmental_stage_id"
     t.integer "cell_line_id"
     t.integer "cell_type_id"
     t.integer "organism_id"
     t.integer "organism_part_id"
     t.integer "sex_id"
-    t.integer "strain_or_line_id"
-    t.string  "growth_condition"
     t.integer "experiment_id"
-    t.string  "individual_name"
+    t.integer "growth_condition_id"
+    t.integer "individual_id"
   end
 
   create_table "bio_samples_protocols", :id => false, :force => true do |t|
     t.integer "bio_sample_id"
     t.integer "protocol_id"
-  end
-
-  create_table "bio_source_providers", :force => true do |t|
-    t.integer "organisation_id"
   end
 
   create_table "bool_values", :force => true do |t|
@@ -51,10 +41,6 @@ ActiveRecord::Schema.define(:version => 20081203160550) do
     t.string "name"
   end
 
-  create_table "chemical_elements", :force => true do |t|
-    t.string "name"
-  end
-
   create_table "compounds", :force => true do |t|
     t.string  "name"
     t.string  "cas"
@@ -62,11 +48,17 @@ ActiveRecord::Schema.define(:version => 20081203160550) do
     t.string  "comment"
     t.string  "inchi"
     t.integer "cid"
+    t.boolean "training_compound", :default => false
   end
 
   create_table "compounds_experiments", :id => false, :force => true do |t|
     t.integer "experiment_id"
     t.integer "compound_id"
+  end
+
+  create_table "concentrations", :force => true do |t|
+    t.float   "value"
+    t.integer "unit_id"
   end
 
   create_table "data_transformations", :force => true do |t|
@@ -86,6 +78,11 @@ ActiveRecord::Schema.define(:version => 20081203160550) do
 
   create_table "developmental_stages", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "durations", :force => true do |t|
+    t.float   "value"
+    t.integer "unit_id"
   end
 
   create_table "experiments", :force => true do |t|
@@ -130,6 +127,10 @@ ActiveRecord::Schema.define(:version => 20081203160550) do
     t.integer "protocol_id"
   end
 
+  create_table "growth_conditions", :force => true do |t|
+    t.string "description"
+  end
+
   create_table "human_interactions", :force => true do |t|
     t.string "unique_id_a"
     t.string "unique_id_b"
@@ -152,6 +153,10 @@ ActiveRecord::Schema.define(:version => 20081203160550) do
 
   add_index "human_interactions", ["unique_id_b"], :name => "index_human_interactions_on_unique_id_b"
   add_index "human_interactions", ["unique_id_a"], :name => "index_human_interactions_on_unique_id_a"
+
+  create_table "individuals", :force => true do |t|
+    t.string "name"
+  end
 
   create_table "organisations", :force => true do |t|
     t.string "name"
@@ -177,11 +182,6 @@ ActiveRecord::Schema.define(:version => 20081203160550) do
     t.string "organisation_id"
   end
 
-  create_table "people_roles", :id => false, :force => true do |t|
-    t.integer "person_id"
-    t.integer "role_id"
-  end
-
   create_table "potencies", :force => true do |t|
     t.string "name"
   end
@@ -193,9 +193,16 @@ ActiveRecord::Schema.define(:version => 20081203160550) do
   create_table "protocols", :force => true do |t|
     t.string  "description"
     t.integer "workpackage_id"
-    t.integer "document_id"
-    t.string  "document_type"
     t.boolean "audited",        :default => false
+    t.string  "name"
+    t.string  "text"
+    t.string  "uri"
+    t.string  "file"
+  end
+
+  create_table "protocols_results", :id => false, :force => true do |t|
+    t.integer "result_id"
+    t.integer "protocol_id"
   end
 
   create_table "protocols_treatments", :id => false, :force => true do |t|
@@ -203,12 +210,13 @@ ActiveRecord::Schema.define(:version => 20081203160550) do
     t.integer "protocol_id"
   end
 
-  create_table "roles", :force => true do |t|
-    t.string "name"
-  end
-
-  create_table "sensitiv_training_compounds", :force => true do |t|
-    t.integer "compound_id"
+  create_table "results", :force => true do |t|
+    t.integer "property_id"
+    t.integer "result_id"
+    t.integer "unit_id"
+    t.integer "treatment_id"
+    t.integer "experiment_id"
+    t.string  "result_type"
   end
 
   create_table "sessions", :force => true do |t|
@@ -225,13 +233,9 @@ ActiveRecord::Schema.define(:version => 20081203160550) do
     t.string "name"
   end
 
-  create_table "softwares", :force => true do |t|
-    t.string  "name"
-    t.string  "description"
-    t.integer "revision"
-    t.string  "url"
-    t.string  "license"
-    t.string  "license_url"
+  create_table "solvents", :force => true do |t|
+    t.integer "compound_id"
+    t.integer "concentration_id"
   end
 
   create_table "strain_or_lines", :force => true do |t|
@@ -275,30 +279,17 @@ ActiveRecord::Schema.define(:version => 20081203160550) do
     t.integer "workpackage_id"
   end
 
-  create_table "targeted_cell_types", :force => true do |t|
-    t.integer "cell_type_id"
-  end
-
-  create_table "text_documents", :force => true do |t|
-    t.string "name"
-    t.string "text"
-  end
-
   create_table "treatments", :force => true do |t|
-    t.integer "dose_id"
-    t.integer "duration_id"
     t.integer "compound_id"
     t.integer "bio_sample_id"
-    t.integer "solvent_id"
-    t.integer "solvent_concentration_id"
     t.integer "experiment_id"
+    t.integer "measurement_id"
+    t.integer "duration_id"
+    t.integer "solvent_id"
+    t.integer "concentration_id"
   end
 
   create_table "units", :force => true do |t|
-    t.string "name"
-  end
-
-  create_table "urls", :force => true do |t|
     t.string "name"
   end
 
