@@ -86,7 +86,7 @@ class ProtocolsController < ApplicationController
       redirect_to :action => :list, :id => protocol.id
     else
 			flash[:notice] = "Please login with your workpackage leader password for WP#{protocol.workpackage.nr}:"
-			redirect_to :controller => 'login', :action =>'login', :workpackage_id => protocol.workpackage.id
+			redirect_to :controller => 'login', :workpackage_id => protocol.workpackage.id
 		end
 
   end
@@ -105,14 +105,6 @@ class ProtocolsController < ApplicationController
   def add_experiment
     @protocol.experiments << Experiment.find(session[:exp_id]) unless session[:exp_id].blank?
   end
-
-	def authorize_write
-		user = User.find(session[:user_id])
-		if user.workpackages.blank? 
-			flash[:notice] = 'Please login with your workpackage/group leader password:'
-			redirect_to :controller => 'login', :action =>'login'
-		end
-	end
 
   def clear_experiment_id
     session[:exp_id] = nil

@@ -1,0 +1,13 @@
+%h3= experiment.title
+= form_for :compounds do |f|
+  = f.error_messages
+  = f.hidden_field 'experiment'
+  %table
+    - properties.each do |p|
+      %tr
+        %td=  p
+        %td=  compound.generic_datas.collect{|d| d.value.value if d.experiment == experiment && d.property.name == p }
+        %td= f.text_field 'property'
+
+  = submit_tag "Save"
+  = link_to 'Back', :action => :show, :id => compound.id

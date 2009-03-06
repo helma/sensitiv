@@ -5,6 +5,8 @@ class Experiment < ActiveRecord::Base
   has_and_belongs_to_many :compounds
 	has_many :results
 	has_many :bio_samples
+  has_many :treatments
+  has_many :measurements
   belongs_to :workpackage
 
 end

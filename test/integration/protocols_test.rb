@@ -13,7 +13,7 @@ class ProtocolsTest < ActionController::IntegrationTest
   end
 
   def login
-    visit "/login/login"
+    visit "/login"
     fill_in "name", :with => "participantSII"
     fill_in "password", :with => "284872"
     click_button 

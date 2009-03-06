@@ -1,0 +1,25 @@
+- url_options = params_for(:action => :update)
+- if request.xhr?
+  = form_remote_tag :url => url_options, :after => "$('#{loading_indicator_id(:action => :update, :id => params[:id])}').style.visibility = 'visible'; Form.disable('#{element_form_id(:action => :update)}');", :complete => "$('#{loading_indicator_id(:action => :update, :id => params[:id])}').style.visibility = 'hidden'; Form.enable('#{element_form_id(:action => :update)}');", :failure => "ActiveScaffold.report_500_response('#{active_scaffold_id}')", :html => { :href => url_for(url_options), :id => element_form_id(:action => :update), :class => 'update', :method => :put }
+- else
+  = form_tag url_options, :id => element_form_id(:action => :update), :multipart => active_scaffold_config.update.multipart?, :class => 'create'
+
+%h4
+  = @record.to_label.nil? ? active_scaffold_config.update.label : as_('Update %s', @record.name)
+- if request.xhr?
+  //#<haml:loud> element_messages_id(:action => :update) </haml:loud>.messages-container
+  = error_messages_for :record
+- else
+= render :partial => 'form_messages'
+
+= render :partial => 'form', :locals => { :columns => active_scaffold_config.update.columns }
+%p.form-footer
+  = render :partial => "experiment_form", :locals => { :compound => @record, :experiment => Experiment.find(4), :properties => ["Derek endpoint","Derek alert","logP","logKp","Molecular weight"] } 
+  = render :partial => 'llna_form', :locals => {:experiment => Experiment.find(5) } 
+  = render :partial => "experiment_form", :locals => { :compound => @record, :experiment => Experiment.find(6), :properties => [ "Sensitiser", "Melting point", "Boiling point", "logP", "Acid/Base", "Solubility", "Remarks"] }
+
+  = submit_tag as_('Update'), :onclick => "getsmiles();", :class => "submit"
+  = link_to as_('Cancel'), params_for(:action => 'show'), :class => 'cancel'
+  = loading_indicator_tag(:action => :update, :id => params[:id])
+%script{ :type => "text/javascript" }
+  Form.focusFirstElement('<haml:loud> element_form_id(:action => :update) </haml:loud>');

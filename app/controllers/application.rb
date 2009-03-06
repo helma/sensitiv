@@ -4,12 +4,9 @@
 class ApplicationController < ActionController::Base
 
 	before_filter :authorize, :except => [:login]
-
-  # authorize write has to be defined in each controller
   before_filter :authorize_write, :only => [:new, :new_existing, :create, :edit, :update, :delete]
 
   layout 'sensitiv'
-  include ExceptionNotifiable
 
 	ActiveScaffold.set_defaults do |conf|
 		conf.actions.exclude :delete
@@ -22,11 +19,16 @@ class ApplicationController < ActionController::Base
 		session[:original_uri] = request.request_uri
 		unless User.find_by_id(session[:user_id])
 			flash[:notice] = 'Please login with your Sens-it-iv username and password:'
-			redirect_to :controller => 'login', :action =>'login'
+			redirect_to :controller => 'login', :action =>'index'
 		end
 	end
 
-  def authorize_write
-    render :text => User.find(session[:user_id]).name +	": You are not authorised to perform this action!"
-  end
+	def authorize_write
+		user = User.find(session[:user_id])
+		if user.workpackages.blank? 
+			flash[:notice] = 'Please login with your workpackage/group leader password:'
+			redirect_to :controller => 'login'
+		end
+	end
+
 end

@@ -1,7 +1,4 @@
-validations for protocols
-	url exists
-	genau 1 x text/url/file
-	
+experiments updaten
 
 dateneingabe f training compounds
 	route?
@@ -27,6 +24,10 @@ home/index updaten
 exception handling
 
 done
+validations for protocols
+	url exists
+	genau 1 x text/url/file
+	
 	helmas webseite als iframe einbetten
 	experiments info fehlt: form|excel sheet|allg infos
 	investigators fehlen: form|excel sheet|allg infos

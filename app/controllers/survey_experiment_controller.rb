@@ -40,9 +40,4 @@ class SurveyExperimentController < ApplicationController
     config.create.columns = cols
   end
 
-  private
-
-	def authorize_write
-  end
-
 end

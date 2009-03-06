@@ -1,0 +1,16 @@
+%h3= experiment.title
+=# form_for :compounds do |c|
+%table
+  - properties.each do |p|
+    %tr
+      %td=  p
+      %td=  Property.find_by_name(p).name
+      %td=  compound.generic_datas.collect{|d| d.value.value if d.experiment == experiment && d.property.name == p }
+
+  - compound.generic_datas.each do |t|
+    - if t.experiment == experiment
+      %tr
+        %td= t.property.name
+        %td= t.to_label
+        %td= t.value.value
+ 

@@ -6,7 +6,7 @@ class ExperimentsController < ApplicationController
 
     conf.actions.exclude :show
     columns[:workpackage].label = "WP"
-		columns[:people].label = 'Investigators'
+		columns[:people].label = 'Submitter'
     columns[:audited].label = "Approved by WP leader"
 		conf.columns[:workpackage].form_ui = :select
 		conf.columns[:protocols].form_ui = :select
@@ -16,15 +16,15 @@ class ExperimentsController < ApplicationController
     conf.columns[:description].options = {:cols => 95 }
     conf.columns[:protocols].search_sql = "protocols.name"
 
-		list.columns = [:workpackage, :title, :description, :date, :audited]
+		list.columns = [:workpackage, :title, :description, :date, :people, :audited]
     list.sorting = [{:workpackage_id => :asc}]
 
-		conf.nested.add_link("Investigators", [:people])
+		#conf.nested.add_link("Investigators", [:people])
 		#conf.nested.add_link("Protocols", [:protocols])
-		conf.nested.add_link("Samples", [:bio_samples])
-		conf.nested.add_link("Compounds", [:compounds])
-		conf.nested.add_link("Treatments", [:treatments])
-		conf.nested.add_link("Measurements", [:generic_datas])
+		#conf.nested.add_link("Samples", [:bio_samples])
+		#conf.nested.add_link("Compounds", [:compounds])
+		conf.nested.add_link("Details", [:treatments])
+		#conf.nested.add_link("Measurements", [:measurements])
 
     # create
     conf.create.link.page = true
@@ -53,7 +53,7 @@ class ExperimentsController < ApplicationController
       redirect_to :action => :list, :id => experiment.id
     else
 			flash[:notice] = "Please login with your workpackage leader password for WP#{experiment.workpackage.nr}:"
-			redirect_to :controller => 'login', :action =>'login', :workpackage_id => experiment.workpackage.id
+			redirect_to :controller => 'login', :action =>'index', :workpackage_id => experiment.workpackage.id
 		end
 
   end
@@ -63,13 +63,5 @@ class ExperimentsController < ApplicationController
   def set_experiment_id
     session[:exp_id] = params[:id]
   end
-
-	def authorize_write
-		user = User.find(session[:user_id])
-		if user.workpackages.blank? 
-			flash[:notice] = 'Please login with your workpackage/group leader password:'
-			redirect_to :controller => 'login', :action =>'login'
-		end
-	end
 
 end

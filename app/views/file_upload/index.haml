@@ -1,0 +1,14 @@
+#main
+
+  %h2 Submit workpackage 8 results
+  %ol
+    %li
+      Download the
+      = link_to "Excel template", ''
+    %li Enter your results into the spreadsheet
+    %li Upload the completed Excel sheets:
+    =form_tag({:action => 'new'}, {:multipart => true})
+    =file_field_tag 'file'
+    =submit_tag 'Upload'
+
+

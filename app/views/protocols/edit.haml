@@ -2,7 +2,7 @@
   .update-view.view
     = error_messages_for 'protocol'
     %ol.form
-      - form_for :protocol, @protocol, :url => { :action => 'edit' } do |f|
+      - form_for :protocol, @protocol, :url => { :action => 'edit' }, :html => {:multipart => true} do |f|
         %li.form-element
           %dl
             %dt

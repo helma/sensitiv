@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090227183042) do
+ActiveRecord::Schema.define(:version => 20090306151505) do
 
   create_table "bio_samples", :force => true do |t|
     t.string  "name"
@@ -110,16 +110,6 @@ ActiveRecord::Schema.define(:version => 20090227183042) do
 
   create_table "float_values", :force => true do |t|
     t.float "value"
-  end
-
-  create_table "generic_datas", :force => true do |t|
-    t.integer "property_id"
-    t.integer "value_id"
-    t.string  "value_type"
-    t.integer "unit_id"
-    t.integer "experiment_id"
-    t.string  "sample_type"
-    t.integer "sample_id"
   end
 
   create_table "generic_datas_protocols", :id => false, :force => true do |t|

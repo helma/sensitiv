@@ -6,10 +6,10 @@ class Result < ActiveRecord::Base
   belongs_to :unit
   belongs_to :experiment
 
-  def to_label
-    label = self.value.to_label unless self.value.to_label.blank?
-    label = label + ' ' + self.unit.name unless self.unit.blank?
-    label
+  def name
+    name = property.name + ": " + result.value.to_s #unless result.value.blank?
+    name += " " + unit.name if unit
+    name
   end
 
 end

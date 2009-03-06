@@ -3,7 +3,7 @@ require "#{File.dirname(__FILE__)}/../test_helper"
 class LoginTest < ActionController::IntegrationTest  
 
   def test_login
-    visit "/login/login"
+    visit "/login"
     fill_in "name", :with => "participantSII"
     fill_in "password", :with => "284872"
     click_button 
