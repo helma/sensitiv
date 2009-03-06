@@ -1,0 +1,22 @@
+%p Please upload a protocol, provide a link to a resource on the internet or enter the protocol in plain text. 
+
+%li.form-element
+  %dl
+    %dt
+      %label{ :for => "record-file" }
+        Upload a document
+    %dd= file_column_field "protocol", "file", :class => "document-input text-input",:id => "record_file"
+
+%li.form-element
+  %dl
+    %dt
+      %label{ :for => "record-uri" }
+        or enter a link to a protocol on the internet
+    %dd= f.text_field :uri
+
+%li.form-element
+  %dl
+    %dt
+      %label{ :for => "record-text" }
+        or enter plain text
+    %dd= f.text_area :text

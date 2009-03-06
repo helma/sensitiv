@@ -1,0 +1,45 @@
+        %li.form-element
+          %dl
+            %dt
+              %label{ :for => "record-experiment" }
+                Experiment title
+            %dd= Experiment.find(session[:exp_id]).title
+          = hidden_field :experiment_id, session[:exp_id]
+
+        - if @protocol.text
+          - fields_for :document, @protocol.text do |document_fields|
+            %li.form-element
+              %dl
+                %dt
+                  %label{ :for => "record_Name" }
+                    Name
+                %dd
+                  = document_fields.text_field :name
+            %li.form-element
+              %dl
+                %dt
+                  %label{ :for => "record_document" }
+                    Text
+                %dd
+                  = document_fields.text_area :text
+        - elsif @protocol.uri
+          - fields_for :document, @protocol.uri do |document_fields|
+            %li.form-element
+              %dl
+                %dt
+                  %label{ :for => "record_document" }
+                    URL
+                %dd
+                  = document_fields.text_field :name
+        - elsif @protocol.file
+          - fields_for :document, @protocol.file do |document_fields|
+            %li.form-element
+              %dl
+                %dt
+                  %label{ :for => "record_document" }
+                    Replacement for
+                    = File.basename(@protocol.file)
+                %dd
+                  - @document = @protocol.file
+                  = file_column_field "document", "file", :class => "document-input text-input",:id => "record_file"
+

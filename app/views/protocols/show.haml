@@ -1,0 +1,11 @@
+#main
+  = flash[:error]
+  = flash[:notice]
+  %h1= @protocol.name
+  - if !@protocol.uri.blank?
+    %iframe{ :src => @protocol.uri, :width => "95%", :height => "1000px", :name => @protocol.name }
+      Your browser does not support iframes. Please use
+      = link_to "this link",  @protocol.uri
+      to see the protocol.
+  - elsif !@protocol.text.blank?
+  = @protocol.text
