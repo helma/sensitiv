@@ -29,42 +29,64 @@ class InsertMeasurements < ActiveRecord::Migration
 
   def self.up
 
-    GenericData.find(:all).each do |g|
-      # identify measurements (as opposed to concentrations, ...
-      case g.sample_type
-      when "Treatment"
-        treatment = g.sample
-        #puts treatment
-        Measurement.create(:property => g.property, :unit => g.unit, :treatment => treatment, :result => g.value, :experiment => g.experiment)#, :experiment => g.experiment
-      when nil
-        if g.experiment and g.experiment.name == "llna"
-          #case treatment.property.name
-        else
-          #puts "#{g.property.name}: #{g.value.value if g.value.value} (#{g.experiment.name if g.experiment})"
-        end
-      when "Compound"
-        case g.experiment.name
-        when "derek"
-          treatment = Treatment.create(:compound => g.sample, :bio_sample => Experiment.find_by_name("llna").bio_samples[0], :experiment => g.experiment) #, :experiment => g.experiment
-          CalculatedProperty.create(:property => g.property, :unit => g.unit, :treatment => treatment, :result => g.value, :experiment => g.experiment) #, :experiment => g.experiment
-        when "phys_chem"
-          treatment = Treatment.create(:compound => g.sample, :experiment => g.experiment) #, :experiment => g.experiment
-          Measurement.create(:property => g.property, :unit => g.unit, :treatment => treatment, :result => g.value) #, :experiment => g.experiment
-        else
-          puts "#{g.sample.name} -> #{g.property.name} (#{g.experiment.name})"
-        end
-        # create calculation results
+    Experiment.find(:all).each do |e|
 
-      when "BioSample"
-        treatment = Treatment.create(:bio_sample => g.sample, :experiment => g.experiment) #, :experiment => g.experiment
-        Measurement.create(:property => g.property, :unit => g.unit, :treatment => treatment, :result => g.value, :experiment => g.experiment) #, :experiment => g.experiment
+      case e.name
+      when "llna"
+      when "derek"
+        GenericData.find_all_by_experiment_id(e.id).each do |g|
+          if g.sample_type == "Compound"
+            treatment = Treatment.create(:compound => g.sample, :experiment => g.experiment) 
+            Calculation.create(:property => g.property, :unit => g.unit, :treatment => treatment, :value => g.value, :experiment => g.experiment) 
+          end
+        end
+      when "phys_chem"
+        GenericData.find_all_by_experiment_id(e.id).each do |g|
+          if g.sample_type == "Compound"
+            treatment = Treatment.create(:compound => g.sample, :experiment => g.experiment) 
+            Measurement.create(:property => g.property, :unit => g.unit, :treatment => treatment, :value => g.value) 
+          end
+        end
+      when "invivoDC"
+        GenericData.find_all_by_experiment_id(e.id).each do |g|
+          if g.sample_type == "BioSample"
+            treatment = Treatment.create(:bio_sample => g.sample, :experiment => g.experiment) 
+            Measurement.create(:property => g.property, :unit => g.unit, :treatment => treatment, :value => g.value) 
+          end
+        end
+      when /project/
+        BioSample.find_all_by_experiment_id(e.id).each do |b|
+          treatment = Treatment.create(:bio_sample => b, :experiment => b.experiment) 
+          fname = b.name.sub(/~/,'_')
+          f = FileDocument.find(:all, :conditions => ["file LIKE ?", "%#{fname}%"]) 
+          if f.size > 1
+            puts f
+          else
+            Measurement.create(:property => Property.find_by_name("Affymetrix File"), :treatment => treatment, :value => f[0]) 
+          end
+        end
+      else 
+        GenericData.find_all_by_experiment_id(e.id).each do |g|
+          # identify measurements (as opposed to concentrations, ...
+          case g.sample_type
+          when "Treatment"
+            treatment = g.sample
+            Measurement.create(:property => g.property, :unit => g.unit, :treatment => treatment, :value => g.value, :experiment => g.experiment)
+          end
+        end
       end
-
     end
-    
+
+    # add cosmital samples without files
+    ["1751","1755","1774","1776","400","402","403","404","409","413","418","419","422"].each do |n|
+      bs = BioSample.find_by_name(n)
+      treatment = Treatment.create(:bio_sample => bs, :experiment => bs.experiment) 
+    end
+
     drop_table :generic_datas
   end
 
   def self.down
   end
+
 end

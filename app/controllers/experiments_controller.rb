@@ -16,14 +16,14 @@ class ExperimentsController < ApplicationController
     conf.columns[:description].options = {:cols => 95 }
     conf.columns[:protocols].search_sql = "protocols.name"
 
-		list.columns = [:workpackage, :title, :description, :date, :people, :audited]
+		list.columns = [:workpackage, :title, :description, :date, :protocols, :people, :audited]
     list.sorting = [{:workpackage_id => :asc}]
 
 		#conf.nested.add_link("Investigators", [:people])
 		#conf.nested.add_link("Protocols", [:protocols])
 		#conf.nested.add_link("Samples", [:bio_samples])
 		#conf.nested.add_link("Compounds", [:compounds])
-		conf.nested.add_link("Details", [:treatments])
+		conf.nested.add_link("Show", [:treatments])
 		#conf.nested.add_link("Measurements", [:measurements])
 
     # create

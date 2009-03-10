@@ -1,3 +1,3 @@
 class BoolValue < ActiveRecord::Base
-  has_many :results, :as => :result
+  has_many :outcomes, :as => :value
 end

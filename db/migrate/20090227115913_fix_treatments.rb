@@ -17,6 +17,12 @@ class FixTreatments < ActiveRecord::Migration
     drop_table :chemical_elements
     rename_column :treatments, :dose_id, :old_dose_id
     rename_column :treatments, :duration_id, :old_duration_id
+    rename_column :treatments, :solvent_id, :old_solvent_id
+    add_column :treatments, :solvent_id, :integer
+    add_column :treatments, :concentration_id, :integer
+    add_column :treatments, :outcome_id, :integer
+    add_column :treatments, :duration_id, :integer
+    Treatment.reset_column_information
 
     create_table :concentrations do |t|
       t.float :value
@@ -31,10 +37,6 @@ class FixTreatments < ActiveRecord::Migration
     create_table :solvents do |t|
       t.integer :compound_id, :concentration_id
     end
-
-    add_column :treatments, :measurement_id, :integer
-    add_column :treatments, :dose_id, :integer
-    add_column :treatments, :duration_id, :integer
 
   end
 

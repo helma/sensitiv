@@ -2,7 +2,7 @@
 %table
   %tr
   - @record.data_transformations.each do |r|
-    - if p = r.data_transformations[0].result
+    - if p = r.data_transformations[0].outcome
       %tr
         %td= p.property.name
         %td

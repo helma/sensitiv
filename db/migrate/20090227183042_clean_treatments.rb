@@ -5,7 +5,7 @@ class CleanTreatments < ActiveRecord::Migration
     remove_column :treatments, :old_duration_id
     remove_column :treatments, :old_solvent_id
     remove_column :treatments, :solvent_concentration_id
-    #rename_table :file_documents, :file_datas
+    Treatment.reset_column_information
   end
 
   def self.down

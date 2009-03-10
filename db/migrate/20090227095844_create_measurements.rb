@@ -19,38 +19,14 @@ class CreateMeasurements < ActiveRecord::Migration
 
   def self.up
 
-    create_table :results do |t|
-      t.integer :property_id, :result_id, :unit_id, :treatment_id, :experiment_id
-      t.string  :result_type
+    create_table :outcomes do |t|
+      t.integer :property_id, :value_id, :unit_id, :treatment_id, :experiment_id
+      t.string  :type, :value_type
     end
 
-    create_table :protocols_results, :id => false do |t|
-      t.integer :result_id, :protocol_id
+    create_table :protocols_outcomes, :id => false do |t|
+      t.integer :outcome_id, :protocol_id
     end
-
-=begin
-    create_table :calculated_properties do |t|
-      t.integer :property_id, :result_id, :unit_id, :compound_id
-      t.string  :result_type
-    end
-
-    create_table :calculated_properties_protocols, :id => false do |t|
-      t.integer :calculated_property_id, :protocol_id
-    end
-
-    create_table :measurement_aggregations, :id => false do |t|
-      t.integer :property_id, :result_id, :unit_id
-      t.string  :result_type
-    end
-
-    create_table :measurement_aggregations_protocols, :id => false do |t|
-      t.integer :measurement_aggregations_id, :protoocol_id
-    end
-
-    create_table :measurements_measurement_aggregations, :id => false do |t|
-      t.integer :measurement_aggregations_id, :measurement_id
-    end
-=end
 
   end
 

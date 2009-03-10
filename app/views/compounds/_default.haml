@@ -1,0 +1,14 @@
+%tr
+  %th{:colspan => '2'}
+    %h5= experiment.title
+
+- @record.treatments.each do |t| 
+  - if t.experiment == experiment
+    - t.outcomes.each do |m|
+      %tr
+        %th
+          = m.property.name
+        %td
+          = m.data unless m.value.blank? 
+          &nbsp;
+          = m.unit.name  unless m.unit.blank?

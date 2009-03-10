@@ -5,7 +5,7 @@ class Protocol < ActiveRecord::Base
 	has_and_belongs_to_many :experiments
 	has_and_belongs_to_many :bio_samples
 	has_and_belongs_to_many :treatments
-	has_and_belongs_to_many :results
+	has_and_belongs_to_many :outcomes
   belongs_to :workpackage
 
   file_column :file

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090306151505) do
+ActiveRecord::Schema.define(:version => 20090310103334) do
 
   create_table "bio_samples", :force => true do |t|
     t.string  "name"
@@ -163,6 +163,16 @@ ActiveRecord::Schema.define(:version => 20090306151505) do
     t.string "name"
   end
 
+  create_table "outcomes", :force => true do |t|
+    t.integer "property_id"
+    t.integer "value_id"
+    t.integer "unit_id"
+    t.integer "treatment_id"
+    t.integer "experiment_id"
+    t.string  "type"
+    t.string  "value_type"
+  end
+
   create_table "people", :force => true do |t|
     t.string "last_name"
     t.string "first_name"
@@ -190,23 +200,14 @@ ActiveRecord::Schema.define(:version => 20090306151505) do
     t.string  "file"
   end
 
-  create_table "protocols_results", :id => false, :force => true do |t|
-    t.integer "result_id"
+  create_table "protocols_outcomes", :id => false, :force => true do |t|
+    t.integer "outcome_id"
     t.integer "protocol_id"
   end
 
   create_table "protocols_treatments", :id => false, :force => true do |t|
     t.integer "treatment_id"
     t.integer "protocol_id"
-  end
-
-  create_table "results", :force => true do |t|
-    t.integer "property_id"
-    t.integer "result_id"
-    t.integer "unit_id"
-    t.integer "treatment_id"
-    t.integer "experiment_id"
-    t.string  "result_type"
   end
 
   create_table "sessions", :force => true do |t|
@@ -273,10 +274,10 @@ ActiveRecord::Schema.define(:version => 20090306151505) do
     t.integer "compound_id"
     t.integer "bio_sample_id"
     t.integer "experiment_id"
-    t.integer "measurement_id"
-    t.integer "duration_id"
     t.integer "solvent_id"
     t.integer "concentration_id"
+    t.integer "outcome_id"
+    t.integer "duration_id"
   end
 
   create_table "units", :force => true do |t|

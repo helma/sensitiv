@@ -70,7 +70,7 @@ end
 
 # Include your application configuration below
 
-ENV['CLASSPATH'] = "#{RAILS_ROOT}/vendor/plugins/opentox/lib/java/:#{RAILS_ROOT}/vendor/plugins/opentox/lib/java/cdk-1.1.svn-19012008.jar"
+ENV['CLASSPATH'] = "#{RAILS_ROOT}/vendor/plugins/rchem/lib/java/:#{RAILS_ROOT}/vendor/plugins/rchem/lib/java/cdk-1.1.svn-19012008.jar"
 ENV['PATH'] =  "#{RAILS_ROOT}/vendor/bin:" + ENV['PATH']
 ENV['GEM_HOME'] = "#{RAILS_ROOT}/vendor/lib/ruby/gems/1.8"
 ENV['GEM_PATH'] = "#{RAILS_ROOT}/vendor/lib/ruby/gems/1.8"

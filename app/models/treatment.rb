@@ -10,11 +10,18 @@ class Treatment  < ActiveRecord::Base
   belongs_to :concentration
   belongs_to :duration
   belongs_to :solvent
-  has_many :measurements
-  has_many :calculated_properties
+  has_many :outcomes
 
   belongs_to :experiment
   has_and_belongs_to_many :protocols
+
+  def measurements
+    outcomes.collect{ |r| r if r.type == "Measurement"}
+  end
+
+  def calculations
+    outcomes.collect{ |r| r if r.type == "Calculation"}
+  end
 
   def to_label
     label = ''

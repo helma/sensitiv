@@ -4,7 +4,8 @@ class TreatmentsController < ApplicationController
   before_filter :remove_empty_columns
 
   active_scaffold :treatment do |conf|
-    conf.columns = [:bio_sample, :compound, :concentration, :duration, :solvent, :protocols, :measurements]
+    conf.columns = [:bio_sample, :compound, :concentration, :duration, :solvent, :outcomes]
+    #conf.columns = [:bio_sample, :compound, :concentration, :duration, :solvent, :protocols, :measurement, :calculation]
     conf.columns[:bio_sample].form_ui = :select
     conf.columns[:compound].form_ui = :select
     conf.columns[:solvent].form_ui = :select

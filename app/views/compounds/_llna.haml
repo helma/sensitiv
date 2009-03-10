@@ -1,0 +1,30 @@
+%tr
+  %th{ :colspan => "2" }
+    %h5= experiment.title
+    
+- treatments = Treatment.find_all_by_experiment_id_and_compound_id(experiment.id,@record.id)
+-# ec3 = treatments.collect{ |t| t.calculations
+- ec3 = Calculation.find_by_property_id(Property.find_by_name("EC3").id)
+- solvent = treatments.collect{ |t| t.solvent}[0]
+- stimulation_indices = treatments.collect{ |t| [ t.measurements, t.concentration] }
+
+%tr
+  %th Potency
+
+%tr
+  %th EC3
+  %td= ec3.data
+
+%tr
+  %th Vehicle
+  %td= solvent.name if solvent
+
+- stimulation_indices.each do |si|
+  %tr
+    %th
+      Stimulation index
+    %td
+      = si[0][0].data unless si[0].blank? 
+      (
+      = si[1].name  unless si[1].blank?
+      )
