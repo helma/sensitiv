@@ -1,3 +1,95 @@
+
+class Treatment  < ActiveRecord::Base
+
+  belongs_to :compound
+  belongs_to :bio_sample
+  belongs_to :concentration
+  belongs_to :duration
+  belongs_to :solvent
+  has_many :outcomes
+
+  belongs_to :experiment
+  has_and_belongs_to_many :protocols
+has_many :generic_datas, :as => :sample
+
+  def measurements
+    outcomes.collect{ |r| r if r.type == "Measurement"}
+  end
+
+  def calculations
+    outcomes.collect{ |r| r if r.type == "Calculation"}
+  end
+
+  def to_label
+    label = ''
+    begin
+      label += "BioSample: "
+      if bio_sample
+        if bio_sample.name
+          label += bio_sample.name
+        elsif bio_sample.organism and bio_sample.organism_part
+          label += bio_sample.organism.name.capitalize + " " + bio_sample.organism_part.name 
+        else
+          label = bio_sample.id.to_s
+        end
+      else
+        label += '-'
+      end
+      label += "<br/>Compound: " 
+      if compound
+        label += compound.name 
+      else
+        label += '-'
+      end
+      label += "<br/>Dose: " 
+      if dose
+        #label += " ("  + dose.id + ")"
+        #label += " (" + dose.value.value + ' ' + dose.unit + ")"
+        #label += " ("  + dose.unit + ")"
+      end
+      label += "<br/>Duration: " 
+      if duration
+        #label += durattion.value
+      end
+      label += "<br/>Solvent: " 
+      if solvent
+        label += solvent.name
+      else
+        label += '-'
+      end
+    rescue
+    end
+    label
+  end
+
+end
+class Compound  < ActiveRecord::Base
+
+  has_and_belongs_to_many :experiments
+  has_many :treatments
+  has_many :solvents
+
+  def data_transformations
+    results = []
+    treatments.each do |t|
+      t.generic_datas.each do |d|
+        d.data_transformations.each do |t|
+          results << t.result
+        end
+      end
+    end
+    results.uniq
+  end
+
+
+end
+class DataTransformation  < ActiveRecord::Base
+  has_and_belongs_to_many :generic_datas
+  has_and_belongs_to_many :protocols
+  belongs_to :result, :class_name => "GenericData", :foreign_key => :result_id
+  belongs_to :experiment
+end
+
 class GenericData < ActiveRecord::Base
 
   belongs_to :sample, :polymorphic => true
@@ -33,6 +125,33 @@ class InsertMeasurements < ActiveRecord::Migration
 
       case e.name
       when "llna"
+        b = BioSample.find(47)
+        b.name = "Mouse (local lymph nodes)"
+        b.save
+        GenericData.find_all_by_experiment_id(e.id).each do |g|
+          # identify measurements (as opposed to concentrations, ...
+          case g.sample_type
+          when "Treatment"
+            treatment = g.sample
+            treatment.bio_sample = b
+            treatment.save
+            Measurement.create(:property => g.property, :unit => g.unit, :treatment => treatment, :value => g.value, :experiment => g.experiment)
+          end
+        end
+        # EC3 and potency (has been messed up in previous versions)
+        ec3 = Property.find_by_name("EC3")
+        potency = Property.find_by_name("Potency")
+        e.compounds.each do |c|
+          solvent = Treatment.find_by_experiment_id_and_compound_id(e.id,c.id).solvent
+          c.data_transformations.each do |dt|
+            if p = dt.data_transformations[0].result
+              treatment = Treatment.create(:compound => c, :experiment => e, :bio_sample => b, :solvent => solvent) 
+              Calculation.create(:property => p.property, :unit => p.unit, :treatment => treatment, :value => p.value) 
+            end
+            treatment = Treatment.create(:compound => c, :experiment => e, :bio_sample => b, :solvent => solvent) 
+            Calculation.create(:property => dt.property, :unit => dt.unit, :treatment => treatment, :value => dt.value) 
+          end
+        end
       when "derek"
         GenericData.find_all_by_experiment_id(e.id).each do |g|
           if g.sample_type == "Compound"
