@@ -1,6 +1,6 @@
 class TreatmentsController < ApplicationController
 
-  #before_filter :remove_empty_columns
+  before_filter :remove_empty_columns
 
   active_scaffold :treatment do |conf|
     conf.columns = [:bio_sample, :compound, :concentration, :duration, :solvent, :outcomes]

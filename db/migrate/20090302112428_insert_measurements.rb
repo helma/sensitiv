@@ -144,11 +144,10 @@ class InsertMeasurements < ActiveRecord::Migration
         e.compounds.each do |c|
           solvent = Treatment.find_by_experiment_id_and_compound_id(e.id,c.id).solvent
           c.data_transformations.each do |dt|
+            treatment = Treatment.create(:compound => c, :experiment => e, :bio_sample => b, :solvent => solvent) 
             if p = dt.data_transformations[0].result
-              treatment = Treatment.create(:compound => c, :experiment => e, :bio_sample => b, :solvent => solvent) 
               Calculation.create(:property => p.property, :unit => p.unit, :treatment => treatment, :value => p.value) 
             end
-            treatment = Treatment.create(:compound => c, :experiment => e, :bio_sample => b, :solvent => solvent) 
             Calculation.create(:property => dt.property, :unit => dt.unit, :treatment => treatment, :value => dt.value) 
           end
         end

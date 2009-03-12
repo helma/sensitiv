@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090310103334) do
+ActiveRecord::Schema.define(:version => 20090312102401) do
 
   create_table "bio_samples", :force => true do |t|
     t.string  "name"
@@ -61,21 +61,6 @@ ActiveRecord::Schema.define(:version => 20090310103334) do
     t.integer "unit_id"
   end
 
-  create_table "data_transformations", :force => true do |t|
-    t.integer "result_id"
-    t.integer "experiment_id"
-  end
-
-  create_table "data_transformations_generic_datas", :id => false, :force => true do |t|
-    t.integer "data_transformation_id"
-    t.integer "generic_data_id"
-  end
-
-  create_table "data_transformations_protocols", :id => false, :force => true do |t|
-    t.integer "data_transformation_id"
-    t.integer "protocol_id"
-  end
-
   create_table "developmental_stages", :force => true do |t|
     t.string "name"
   end
@@ -110,11 +95,6 @@ ActiveRecord::Schema.define(:version => 20090310103334) do
 
   create_table "float_values", :force => true do |t|
     t.float "value"
-  end
-
-  create_table "generic_datas_protocols", :id => false, :force => true do |t|
-    t.integer "generic_data_id"
-    t.integer "protocol_id"
   end
 
   create_table "growth_conditions", :force => true do |t|
@@ -173,6 +153,11 @@ ActiveRecord::Schema.define(:version => 20090310103334) do
     t.string  "value_type"
   end
 
+  create_table "outcomes_protocols", :id => false, :force => true do |t|
+    t.integer "outcome_id"
+    t.integer "protocol_id"
+  end
+
   create_table "people", :force => true do |t|
     t.string "last_name"
     t.string "first_name"
@@ -198,11 +183,6 @@ ActiveRecord::Schema.define(:version => 20090310103334) do
     t.string  "text"
     t.string  "uri"
     t.string  "file"
-  end
-
-  create_table "protocols_outcomes", :id => false, :force => true do |t|
-    t.integer "outcome_id"
-    t.integer "protocol_id"
   end
 
   create_table "protocols_treatments", :id => false, :force => true do |t|

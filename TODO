@@ -1,41 +1,22 @@
-experiments updaten
+migrations:
+	alte wp8 sheets uebernehmen
 
-dateneingabe f training compounds
-	route?
+controller:
+	llna f compounds
+	sort treatments
+	home/index updaten
+	affy file download, sonst ohne link
 
-excel upload f neues template aktualisieren
+	compounds edit (training compounds)
+	experiments edit (evtl temporaer disabeln)
+	excel upload f neues template aktualisieren
 
-units f measurements eintragen
-protocols eintragen
-biosource provider eintragen
+deploy:
+	costanza daten einfuegen: per hand (=test)
+	francois daten einfuegen
 
-2.sheet uebernehmen
-
-compounds/bio-sample measurements als treatments?
-bei measurements treatment info anzeigen
-
-
-eingabe von experiments and persons
-
-costanza daten einfuegen: per hand (=test)
-francois daten einfuegen
-
-home/index updaten
 exception handling
 
 done
-validations for protocols
-	url exists
-	genau 1 x text/url/file
-	
-	helmas webseite als iframe einbetten
-	experiments info fehlt: form|excel sheet|allg infos
-	investigators fehlen: form|excel sheet|allg infos
-#organism part fehlt: check script
-#compounds fehlen: check script
-#dose falsch: check script
-#solvent fehlt:  check script
-#controls: check script
-#controls result == duration: check controller (only treatments anzeigen)
-#measurements checken
-#excel datenuebernahme pruefen
+	protokolle richtig zuordnen (samples, treatments, measurements, calculations)
+	cleanup (nicht benuetzte tabellen entfernen, daten checken u ggf entfernen)
