@@ -23,44 +23,14 @@ class Treatment  < ActiveRecord::Base
     outcomes.collect{ |r| r if r.type == "Calculation"}
   end
 
-  def to_label
+  def name
     label = ''
     begin
-      label += "BioSample: "
-      if bio_sample
-        if bio_sample.name
-          label += bio_sample.name
-        elsif bio_sample.organism and bio_sample.organism_part
-          label += bio_sample.organism.name.capitalize + " " + bio_sample.organism_part.name 
-        else
-          label = bio_sample.id.to_s
-        end
-      else
-        label += '-'
-      end
-      label += "<br/>Compound: " 
-      if compound
-        label += compound.name 
-      else
-        label += '-'
-      end
-      label += "<br/>Dose: " 
-      if dose
-        #label += " ("  + dose.id + ")"
-        #label += " (" + dose.value.value + ' ' + dose.unit + ")"
-        #label += " ("  + dose.unit + ")"
-      end
-      label += "<br/>Duration: " 
-      if duration
-        #label += durattion.value
-      end
-      label += "<br/>Solvent: " 
-      if solvent
-        label += solvent.name
-      else
-        label += '-'
-      end
+      label += "Sample " + bio_sample.name if bio_sample and bio_sample.name
+      label += " treated with " unless label.blank? or compound.blank?
+      label += compound.name if compound
     rescue
+      label = "-"
     end
     label
   end

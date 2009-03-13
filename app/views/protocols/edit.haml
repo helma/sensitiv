@@ -1,63 +1,49 @@
 .active-scaffold
-  .update-view.view
+  .show-view.view
     = error_messages_for 'protocol'
-    %ol.form
-      - form_for :protocol, @protocol, :url => { :action => 'edit' }, :html => {:multipart => true} do |f|
-        %li.form-element
-          %dl
-            %dt
-              %label{ :for => "record-name" }
-                Name
-            %dd= f.text_field :name
-        %br/
-        %li.form-element
-          %dl
-            %dt
-              %label{ :for => "record-description" }
-                Description
-            %dd= f.text_area :description
-        %br/
-        %li.form-element
-          %dl
-            %dt
-              %label{ :for => "record-workpackage" }
-                Workpackage
-            %dd= select(:protocol, :workpackage_id, Workpackage.find(:all).collect {|w| [ w.nr, w.nr ] })
+    %h4
+      Update
+      = @protocol.name
+    - form_for :protocol, @protocol, :url => { :action => 'edit' }, :html => {:multipart => true} do |f|
+      %dl.form
+        %dt
+          %label{ :for => "record-name" }
+            Name
+        %dd= f.text_field :name
+        %dt
+          %label{ :for => "record-description" }
+            Description
+        %dd= f.text_area :description
+        %dt
+          %label{ :for => "record-workpackage" }
+            Workpackage
+        %dd= select(:protocol, :workpackage_id, Workpackage.find(:all).collect {|w| [ w.nr, w.nr ] })
 
-        %p
-        %hr/
         %p Please upload a protocol, provide a link to a resource on the internet or enter the protocol in plain text. 
 
-        %li.form-element
-          %dl
-            %dt
-              %label{ :for => "record-file" }
-                Upload a document
-                - if @protocol.file
-                  ( current file:
-                  = File.basename(@protocol.file)
-                  )
+      %dl.form
 
-            %dd= file_column_field "protocol", "file", :class => "document-input text-input",:id => "record_file"
+        %dt
+          %label{ :for => "record-file" }
+            Upload a document
+            = "(current file: #{File.basename(@protocol.file)})" if @protocol.file
+              
+        %dd= file_column_field "protocol", "file", :class => "document-input text-input",:id => "record_file"
 
-        %li.form-element
-          %dl
-            %dt
-              %label{ :for => "record-uri" }
-                or enter an internet address for the protocol
-            %dd= f.text_field :uri
+        %dt
+          %label{ :for => "record-uri" }
+            or enter an internet address for the protocol
+        %dd= f.text_field :uri
 
-        %li.form-element
-          %dl
-            %dt
-              %label{ :for => "record-text" }
-                or enter the text of the protocol
-            %dd= f.text_area :text
+        %dt
+          %label{ :for => "record-text" }
+            or enter the text of the protocol
+        %dd= f.text_area :text
 
-        %p.form-footer
-          = submit_tag as_('Update'), :class => "submit"
-          = link_to as_('Cancel'), params_for(:action => 'list'), :class => 'cancel'
-          = loading_indicator_tag(:action => :update, :id => params[:id])
-        %script{ :type => "text/javascript" }
-          Form.focusFirstElement('<haml:loud> element_form_id(:action => :update) </haml:loud>');
+      %p.form-footer
+        = submit_tag as_('Update'), :class => "submit"
+        = link_to as_('Cancel'), params_for(:action => 'list'), :class => 'cancel'
+        = loading_indicator_tag(:action => :update, :id => params[:id])
+      %script{ :type => "text/javascript" }
+        Form.focusFirstElement('<haml:loud> element_form_id(:action => :update) </haml:loud>');
 

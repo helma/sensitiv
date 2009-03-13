@@ -27,12 +27,4 @@ module CompoundsHelper
     end
   end
 
-  def datas_column(record)
-    s = ''
-    record.outputs.each do |d|
-      s = s + d.name + ':' + d.value.to_s + "<p>"
-    end
-    s
-  end
-
 end

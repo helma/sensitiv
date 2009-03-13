@@ -1,15 +1,24 @@
+data submission/edit
+	protocols: ok
+	experiments:
+		erst new
+		kein anlegen von neuen bio-samples moeglich
+		wizard f data submission?
+		oder excel file upload (generic template)
+	compounds:
+		compounds ok
+		llna, derek,etc fehlt
+
 migrations:
 	alte wp8 sheets uebernehmen
+	FileDocuments aufraeumen, evtl 2 klassen (protokolle,outcomes)
 
 controller:
-	llna f compounds
-	sort treatments
-	home/index updaten
-	affy file download, sonst ohne link
+	outcomes mit line breaks anzeigen
+	excel upload f neues template aktualisieren
 
 	compounds edit (training compounds)
 	experiments edit (evtl temporaer disabeln)
-	excel upload f neues template aktualisieren
 
 deploy:
 	costanza daten einfuegen: per hand (=test)
@@ -20,3 +29,7 @@ exception handling
 done
 	protokolle richtig zuordnen (samples, treatments, measurements, calculations)
 	cleanup (nicht benuetzte tabellen entfernen, daten checken u ggf entfernen)
+	llna f compounds
+	sort treatments
+	affy file download, sonst ohne link
+	home/index updaten

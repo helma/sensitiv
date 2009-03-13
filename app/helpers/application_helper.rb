@@ -4,7 +4,6 @@ module ApplicationHelper
 
 	def display_smiles(smiles)
     '<img src="' + url_for(:controller => "compounds", :action => "display_smiles", :smiles => smiles)+ '" alt="' + smiles+'"></img>'
-    #'"'+smiles+'"'
 	end
 
   def display_smiles_with_fragments(smiles, activating_fragments,deactivating_fragments,activating_p,deactivating_p,unknown_fragments)

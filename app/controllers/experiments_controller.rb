@@ -2,37 +2,37 @@ class ExperimentsController < ApplicationController
 
   before_filter :set_experiment_id, :only => :nested
 
-	active_scaffold :experiment do |conf|
+	active_scaffold :experiment do |config|
 
-    conf.actions.exclude :show
+    config.actions.exclude :show
+    config.actions.exclude :create
+    config.actions.exclude :update
+
     columns[:workpackage].label = "WP"
 		columns[:people].label = 'Submitter'
     columns[:audited].label = "Approved by WP leader"
-		conf.columns[:workpackage].form_ui = :select
-		conf.columns[:protocols].form_ui = :select
-		conf.columns[:title].form_ui = :textarea
-    conf.columns[:title].options = { :cols => 95}
-		conf.columns[:description].form_ui = :textarea
-    conf.columns[:description].options = {:cols => 95 }
-    conf.columns[:protocols].search_sql = "protocols.name"
+		config.columns[:workpackage].form_ui = :select
+		config.columns[:protocols].form_ui = :select
+		config.columns[:title].form_ui = :textarea
+    config.columns[:title].options = { :cols => 95}
+		config.columns[:description].form_ui = :textarea
+    config.columns[:description].options = {:cols => 95 }
+    config.columns[:protocols].search_sql = "protocols.name"
 
 		list.columns = [:workpackage, :title, :description, :date, :protocols, :people, :audited]
     list.sorting = [{:workpackage_id => :asc}]
 
-		#conf.nested.add_link("Investigators", [:people])
-		#conf.nested.add_link("Protocols", [:protocols])
-		#conf.nested.add_link("Samples", [:bio_samples])
-		#conf.nested.add_link("Compounds", [:compounds])
-		conf.nested.add_link("Show", [:treatments])
-		#conf.nested.add_link("Measurements", [:measurements])
+		config.nested.add_link("Show", [:treatments])
 
+=begin
     # create
-    conf.create.link.page = true
+    config.create.link.page = true
 		create.columns = [:workpackage, :title, :description, :date]
 
     # update
-    conf.update.link.page = true
+    config.update.link.page = true
 		update.columns = [:workpackage, :title, :description, :date]
+=end
 
 	end
 

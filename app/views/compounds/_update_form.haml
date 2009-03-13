@@ -13,10 +13,19 @@
 = render :partial => 'form_messages'
 
 = render :partial => 'form', :locals => { :columns => active_scaffold_config.update.columns }
+
+- ["derek","llna","phys_chem"].each do |n|
+  - e = Experiment.find_by_name(n)
+  - case e.name
+  - when "llna"
+    = render :partial => 'llna', :locals => {:experiment => e}
+  - when /derek|phys_chem/
+    = render :partial => 'default', :locals => {:experiment => e}
+
 %p.form-footer
-  = render :partial => "experiment_form", :locals => { :compound => @record, :experiment => Experiment.find(4), :properties => ["Derek endpoint","Derek alert","logP","logKp","Molecular weight"] } 
-  = render :partial => 'llna_form', :locals => {:experiment => Experiment.find(5) } 
-  = render :partial => "experiment_form", :locals => { :compound => @record, :experiment => Experiment.find(6), :properties => [ "Sensitiser", "Melting point", "Boiling point", "logP", "Acid/Base", "Solubility", "Remarks"] }
+  =# render :partial => "experiment_form", :locals => { :compound => @record, :experiment => Experiment.find_by_name('derek'), :properties => ["Derek endpoint","Derek alert","logP","logKp","Molecular weight"] } 
+  =# render :partial => 'llna_form', :locals => {:experiment => Experiment.find(5) } 
+  =# render :partial => "experiment_form", :locals => { :compound => @record, :experiment => Experiment.find(6), :properties => [ "Sensitiser", "Melting point", "Boiling point", "logP", "Acid/Base", "Solubility", "Remarks"] }
 
   = submit_tag as_('Update'), :onclick => "getsmiles();", :class => "submit"
   = link_to as_('Cancel'), params_for(:action => 'show'), :class => 'cancel'

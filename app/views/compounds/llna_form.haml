@@ -1,0 +1,54 @@
+.active-scaffold
+  .show-view.view
+    %h4
+      Update
+      = @experiment.title
+      for
+      = @compound.name
+
+    - form_for :compound, @compound, :url => { :action => 'edit_llna' }, :html => {:multipart => true} do |f|
+      = f.hidden_field :experiment_id, :value => @experiment.id
+
+      %dl.form
+        - sum_treatment = Treatment.find_by_experiment_id_and_compound_id_and_concentration_id(experiment.id,@record.id,nil)
+        - sum_treatment.calculations.each do |calc|
+        %dt
+          %label{ :for => "record-name" }
+            Name
+        %dd= f.text_field :name
+  %table
+    %tr
+    - @record.data_transformations.each do |r|
+      - if p = r.data_transformations[0].outcome
+        %tr
+          %td= p.property.name
+          %td
+            = p.value.value unless p.value.blank?
+            &nbsp;
+            = p.unit.name  unless p.unit.blank?
+      
+      %tr
+        %td= r.property.name
+        %td
+          = r.value.value unless r.value.blank? 
+          &nbsp;
+          = r.unit.name  unless r.unit.blank?
+
+    %tr
+      %td Vehicle
+      %td= @record.treatments[0].solvent.name
+
+    - @record.treatments.each do |t| 
+      - d = t.generic_datas[0]
+      - if d.experiment == experiment
+        %tr
+          %td= d.property.name
+          %td
+            = d.value.value unless d.value.blank?
+            &nbsp;
+            = d.unit.name  unless d.unit.blank?
+            (
+            = t.dose.value.value
+            = t.dose.unit.name
+            )
+

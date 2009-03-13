@@ -1,14 +1,15 @@
-%tr
-  %th{:colspan => '2'}
-    %h5= experiment.title
+.experiment
+  %h5
+    = experiment.title
+    =# link_to "Edit", :controller => :compounds, :action => :edit_experiment, :id => @record.id, :experiment_id => experiment.id
 
-- @record.treatments.each do |t| 
-  - if t.experiment == experiment
-    - t.outcomes.each do |m|
-      %tr
-        %th
-          = m.property.name
-        %td
-          = m.data unless m.value.blank? 
-          &nbsp;
-          = m.unit.name  unless m.unit.blank?
+  %dl
+    - @record.treatments.each do |t| 
+      - if t.experiment == experiment
+        - t.outcomes.each do |m|
+          %dt
+            = m.property.name
+          %dd
+            = m.data unless m.value.blank? 
+            &nbsp;
+            = m.unit.name  unless m.unit.blank?
