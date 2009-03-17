@@ -1,3 +1,16 @@
+llna_daten insert
+
+controller:
+	outcomes mit line breaks anzeigen
+	excel upload f neues template aktualisieren
+  help updaten
+
+migrations:
+  template einfuegen
+  test compounds einfuegen
+	FileDocuments aufraeumen, evtl 2 klassen (protokolle,outcomes)
+	alte wp8 sheets uebernehmen
+
 data submission/edit
 	protocols: ok
 	experiments:
@@ -9,14 +22,6 @@ data submission/edit
 		compounds ok
 		llna, derek,etc fehlt
 
-migrations:
-	alte wp8 sheets uebernehmen
-	FileDocuments aufraeumen, evtl 2 klassen (protokolle,outcomes)
-
-controller:
-	outcomes mit line breaks anzeigen
-	excel upload f neues template aktualisieren
-
 	compounds edit (training compounds)
 	experiments edit (evtl temporaer disabeln)
 
@@ -27,6 +32,13 @@ deploy:
 exception handling
 
 done
+template:
+  - all 29 chemicals
+  - millimolar and micromolar concentrations 
+
+
+
+	neue phys_chem daten werden nicht angezeigt (duerften laut console in db sein)
 	protokolle richtig zuordnen (samples, treatments, measurements, calculations)
 	cleanup (nicht benuetzte tabellen entfernen, daten checken u ggf entfernen)
 	llna f compounds

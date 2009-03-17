@@ -4,13 +4,14 @@
   %ol
     %li
       Download the
-      = link_to "Excel template", ''
+      = link_to "Excel template" , :controller => :protocols, :action => :show, :id => Protocol.find_by_name("template analysis file WP8 data_v2.xls").id
     %li Enter your results into the spreadsheet
     %li Upload the completed Excel sheets:
     =form_tag({:action => 'new'}, {:multipart => true})
     =file_field_tag 'file'
     =submit_tag 'Upload'
 
-  Please contact 
+  %h2 Submit data for other workpackages:
+  Please send an Excel sheet with a representative example to
   = mail_to "helma@in-silico.de"
-  if you want to create upload facilities for other workpackages.
+  and we will create a template for your data submission. Please understand, that we can use only structured data for the database. That means that we cannot use e.g. images, pdf files, powerpoint or word documents.
