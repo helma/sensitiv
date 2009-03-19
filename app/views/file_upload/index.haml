@@ -4,8 +4,9 @@
   %ol
     %li
       Download the
-      = link_to "Excel template" , :controller => :protocols, :action => :show, :id => Protocol.find_by_name("template analysis file WP8 data_v2.xls").id
-    %li Enter your results into the spreadsheet
+      = link_to "Excel template" , :controller => :protocols, :action => :show, :id => Protocol.find_by_name("wp8_template.xls").id
+    %li Enter administrative information on sheet 1
+    %li Enter your experimental results on sheet 2
     %li Upload the completed Excel sheets:
     =form_tag({:action => 'new'}, {:multipart => true})
     =file_field_tag 'file'

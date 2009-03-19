@@ -62,7 +62,7 @@ gem_install haml         2.0.6
 gem_install thin         1.0.0
 gem_install rjb          1.1.6
 gem_install rsruby       0.5     "-- --with-R-dir=$r_home"
-gem_install roo          1.2.1
+gem_install roo          1.2.3
 
 # create haml plugin
 rm -rf vendor/plugins/haml && vendor/bin/haml --rails .

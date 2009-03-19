@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090317105705) do
+ActiveRecord::Schema.define(:version => 20090317161304) do
 
   create_table "bio_samples", :force => true do |t|
     t.string  "name"
@@ -256,7 +256,6 @@ ActiveRecord::Schema.define(:version => 20090317105705) do
     t.integer "experiment_id"
     t.integer "solvent_id"
     t.integer "concentration_id"
-    t.integer "outcome_id"
     t.integer "duration_id"
   end
 

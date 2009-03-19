@@ -1,14 +1,23 @@
+phys_chem f maleic anhydride, gluturaldehyde
+
+
+wp8 fragen
+	experiment = replicate oder id
+	1e,2e physical replicates
+	nr test structures
+	solvent
+	
+controller:
+  help updaten
+--
+deploy:
+	francois daten einfuegen
+
 llna_daten insert
 
-controller:
-	outcomes mit line breaks anzeigen
-	excel upload f neues template aktualisieren
-  help updaten
-
 migrations:
-  template einfuegen
-  test compounds einfuegen
-	FileDocuments aufraeumen, evtl 2 klassen (protokolle,outcomes)
+	
+	FileDocuments umbenennen?
 	alte wp8 sheets uebernehmen
 
 data submission/edit
@@ -25,13 +34,17 @@ data submission/edit
 	compounds edit (training compounds)
 	experiments edit (evtl temporaer disabeln)
 
-deploy:
-	costanza daten einfuegen: per hand (=test)
-	francois daten einfuegen
-
 exception handling
 
 done
+template name/migration
+spreadsheet:
+	compound liste
+	outcomes mit line breaks anzeigen
+	excel upload f neues template aktualisieren
+	costanza daten einfuegen: per hand (=test)
+  template einfuegen
+  test compounds einfuegen
 template:
   - all 29 chemicals
   - millimolar and micromolar concentrations 

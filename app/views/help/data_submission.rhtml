@@ -1,7 +1,14 @@
 <div id='main'>
   <%= render :partial => "index" %>
-  <b><a name="submission">Data submission</a></b><p/>
+  <h2><a name="submission">Data submission</a></h2><p/>
+  <h3>Workpackage 8</h3>
+  Please follow the instructions on the <%= link_to "Data submission", :controller => :file_upload %> page.
+  <h3>Other workpackages</h3>
+  Please send an Excel sheet with a representative example to
+  <%= mail_to "helma@in-silico.de"%>
+  and we will create a template for your data submission. Please understand, that we can use only structured data for the database. That means that we cannot use e.g. images, pdf files, powerpoint or word documents.
 
+  <!--
   <ul>
     <li><b>New experiments</b><br/> 
     Please provide basic experimental information according to the guidelines below and send the measurements either per email to <%= mail_to "helma@in-silico.de", "helma@in-silico.de" %> or on a CD/DVD per regular mail to <p/>
@@ -36,4 +43,5 @@
 
   More questions? Please read the <%= link_to "General Usage", :action => "general_usage" %> part, submit a <%= link_to "bug report or feature request", :action => "tickets" %> or contact <a href='mailto:helma@in-silico.de'>helma@in-silico.de</a> deirectly.
   </ol>
+  -->
 </div>

@@ -8,7 +8,8 @@ class Outcome < ActiveRecord::Base
   belongs_to :experiment
 
   def name
-    name = property.name + ": " 
+    name = ''
+    name += property.name + ": " if property
     name += data if data
     name += " " + unit.name if unit
     name

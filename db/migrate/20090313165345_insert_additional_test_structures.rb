@@ -1,7 +1,8 @@
 class InsertAdditionalTestStructures < ActiveRecord::Migration
   def self.up
 
-    remove_column :treatments, :oucome_id
+    remove_column :treatments, :outcome_id
+    Property.create(:name => "Water solubility")
 
     new_training_compounds = [
       {
@@ -28,7 +29,7 @@ class InsertAdditionalTestStructures < ActiveRecord::Migration
           "Melting point" => "-4.52E+01 °C",
           "Boiling point" => "131.7° C",
           "logP" => 2.84,
-          "Water solubiliy" => "498 mg/L"
+          "Water solubility" => "498 mg/L"
         }
       },{
         :name => "4-Hydroxybenzoic acid",
@@ -54,7 +55,7 @@ class InsertAdditionalTestStructures < ActiveRecord::Migration
           "Melting point" => "214.5 °C",
           "logP" => 1.58,
           "Acid/Base" => "pKa 4.54",
-          "Water solubiliy" => "5000 mg/L"
+          "Water solubility" => "5000 mg/L"
         },
       },{
         :name => "Benzaldehyde",
@@ -82,7 +83,7 @@ class InsertAdditionalTestStructures < ActiveRecord::Migration
           "Melting point" => "-2.60E+01°C ",
           "Boiling point" => "179° C",
           "logP" => 1.48,
-          "Water solubiliy" => "6570 mg/L"
+          "Water solubility" => "6570 mg/L"
         },
       },{
         :name => "Diethyl Phthalate ",
@@ -107,7 +108,7 @@ class InsertAdditionalTestStructures < ActiveRecord::Migration
           "Melting point" => "-4.05E+01° C",
           "Boiling point" => "295° C",
           "logP" => 2.42,
-          "Water solubiliy" => "1080 mg/L"
+          "Water solubility" => "1080 mg/L"
         },
       },{
         :name => "Octanoic acid ",
@@ -133,7 +134,7 @@ class InsertAdditionalTestStructures < ActiveRecord::Migration
           "Boiling point" => "239° C",
           "logP" => 3.05,
           "Acid/Base" => "pKa 4.89",
-          "Water solubiliy" => "789 mg/L"
+          "Water solubility" => "789 mg/L"
         },
       },{
         :name => "Hexamethylene diisocyanate",
@@ -144,7 +145,7 @@ class InsertAdditionalTestStructures < ActiveRecord::Migration
           "Melting point" => "-6.70E+01° C",
           "Boiling point" => "255° C",
           "logP" => 3.2,
-          "Water solubiliy" => "117 mg/L"
+          "Water solubility" => "117 mg/L"
         },
       },{
         :name => "Maleic anhydride",
@@ -155,7 +156,7 @@ class InsertAdditionalTestStructures < ActiveRecord::Migration
           "Melting point" => "52.8° C",
           "Boiling point" => "202° C",
           "logP" => 1.62,
-          "Water solubiliy" => "4910 mg/L"
+          "Water solubility" => "4910 mg/L"
         },
       },{
         :name => "Glutaraldehyde",
@@ -185,7 +186,7 @@ class InsertAdditionalTestStructures < ActiveRecord::Migration
           "Melting point" => "53° C",
           "Boiling point" => "188° C",
           "logP" => -0.18,
-          "Water solubiliy" => "1.67E+05 mg/L"
+          "Water solubility" => "1.67E+05 mg/L"
         }
       }
     ]
@@ -241,6 +242,8 @@ class InsertAdditionalTestStructures < ActiveRecord::Migration
       if tc[:phys_chem]
         unless t = Treatment.find_by_compound_id_and_experiment_id(c.id,e.id)
           t = Treatment.create(:compound => c, :experiment => e) 
+          c.experiments << e
+          c.save
           puts "Creating treatment for #{c.name} #{e.name}"
           tc[:phys_chem].each do |k,v|
             case k

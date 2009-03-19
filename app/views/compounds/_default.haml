@@ -8,7 +8,7 @@
       - if t.experiment == experiment
         - t.outcomes.each do |m|
           %dt
-            = m.property.name
+            = m.property.name unless m.property.blank?
           %dd
             = m.data unless m.value.blank? 
             &nbsp;

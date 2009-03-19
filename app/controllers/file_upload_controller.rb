@@ -7,174 +7,211 @@ class FileUploadController <  ActionController::Base
   def index
   end
 
-  def new
+  def parse(xl)
 
-    flash[:warning] = "You did not send an Excel file" unless params[:file].content_type == 'application/vnd.ms-excel'
-    flash[:notice] = "#{params[:file].original_filename} uploaded"
-    tmp_excel = RAILS_ROOT+'/tmp/'+params[:file].original_filename
-    File.mv(params[:file].path,tmp_excel)
-    @xl = Excel.new(tmp_excel)
-    @xl.default_sheet = @xl.sheets.first
+    # define layout of excel sheet here
+    # cell arguments: row, column, sheet
 
-    measurements = {
+    # read single cells
+    
+    # first sheet
+    xl.default_sheet = xl.sheets[0]
+    data = {
 
-      24 => {
-        "% cell death" =>  9, # duration => row
-        "IgG1-F raw data" => 25,
-        "CD86-F raw data" => 26,
-        "IgG1-F % positive cells" => 40,
-        "CD86-F % positive cells" => 41,
-        "CXCL8 Production" => 58,
+      :experiment => {
+        :number => xl.cell(2,2),
+        :title => xl.cell(3,2),
+        :description => xl.cell(4,2)
       },
 
-      48 => {
-        "% cell death" => 14,
-        "IgG1-F raw data" => 31,
-        "CD86-F raw data" => 32,
-        "IgG1-F % positive cells" => 46,
-        "CD86-F % positive cells" => 47,
-        "CXCL8 Production" => 63
+      :person => {
+        :first_name => xl.cell(7,2),
+        :last_name => xl.cell(8,2),
+        :email => xl.cell(9,2),
+        :phone => xl.cell(10,2)
+      },
+
+      :organisation => {
+        :name => xl.cell(13,2),
+        :address => xl.cell(14,2)
+      }
+    }
+
+    # second sheet
+    xl.default_sheet = xl.sheets[1]
+    data[:cell_line] = xl.cell(1,3),
+    data[:treatment_time] = xl.cell(2,3),
+    data[:concentration_unit]  = xl.cell(2,3)
+
+    # read ranges
+    ranges = {
+
+      :replicates => 2,
+
+      :control_row => 9,
+
+      :control_columns => {
+        :medium =>  2,
+        :lps => 4,
+        :dmso => 6
+      }, 
+
+      :compounds => {
+        :row => 8,
+        :start_column => 12, # 'L'
+        :nr_columns => 4
+      },
+
+      :concentrations => {
+        :row => 9,
+        :nr => 5,
+        :column_size => 2
+      },
+
+      :measurement_rows => {
+        "Cell survival" => 11,
+        "CD86 RFI" => 19,
+        "CD86 positive cells" => 26,
+        "CD86 stimulation index" => 33,
+        "CXCL8 relative production" => 40
       }
 
     }
 
-    measurements_sheet2 = {
+    # parse ranges
 
-      24 => { "CD86-F raw data (CD86 positive cells)" => 9 },
-      48 => { "CD86-F raw data (CD86 positive cells)" => 14 }
-
-    }
-
-    percent = Unit.create(:name => '%') unless percent = Unit.find_by_name('%')
-    pg_ml = Unit.create(:name => 'pg/mL') unless pg_ml = Unit.find_by_name('pg/mL')
-    properties = {}
-    units = {}
-    { "% cell death" => ["cell death", percent],
-      "IgG1-F raw data" => ["IgG1-F raw data", nil],
-      "CD86-F raw data" => ["CD86-F raw data", nil],
-      "IgG1-F % positive cells" => ["IgG1-F", percent],
-      "CD86-F % positive cells" => ["CD86-F", percent],
-      "CXCL8 Production" => ["CXCL8 Production", pg_ml],
-      "CD86-F raw data (CD86 positive cells)" => ["CD86-F raw data (CD86 positive cells)", nil] }.each do |p,a|
-      properties[p] = Property.create(:name => a[0]) unless properties[p] = Property.find_by_name(a[0])
-      units[p] = a[1]
+    # controls
+    data[:treatments] = []
+    ranges[:control_columns].each do |control,col|
+      name = xl.cell(ranges[:control_row],col)
+      ranges[:replicates].times do 
+        treatment = {
+          :compound => name,
+          :measurements => {}
+        }
+        ranges[:measurement_rows].each do |m,row|
+          treatment[:measurements][m] = xl.cell(row,col)
+        end
+        col += 1
+        data[:treatments] << treatment
+      end
     end
 
-    controls = {
-
-      "medium" => ['B','C'],
-      "LPS" => ['D','E'], 
-      "0.1% DMSO" => ['F','G']
-
-    }
-
-    compounds = {
-
-      "DNCB" => {
-        :compound => Compound.find(203),
-        :start_column => 12 # L
-      },
-
-      "Cinnamaldehyde" => {
-        :compound => Compound.find(9),
-        :start_column => 12+8 # 'T'
-      },
-
-      "SDS" => {
-        :compound => Compound.find(124),
-        :start_column => 12+2*8 # 'AB'
-      },
-
-      "Salicylic acid" => {
-        :compound => Compound.find(12),
-        :start_column => 12+3*8 # 'AJ'
-      }
-
-    }
-
-    experiment = Experiment.create(:name => "test", :title => 'test', :workpackage => Workpackage.find_by_nr(8)) # complete
-    cell_line = CellLine.create(:name => "THP-1") unless cell_line = CellLine.find_by_name("THP-1")
-    cell_type = CellType.create(:name => "acute monocytic leukemia")  unless cell_type = CellType.find_by_name("acute monocytic leukemia")
-    cd86_type = CellType.create(:name => "CD86 positive THP-1 cells")  unless cell_type = CellType.find_by_name("acute monocytic leukemia")
-    organism = Organism.find_by_name("human")
-    organism_part = OrganismPart.find_by_name("blood")
-    sex = Sex.find_by_name("male")
-    hours = Unit.find_by_name("hours")
-
-    dmso = Compound.find(225)
-    dmso_concentration = GenericData.create(:experiment => experiment, :value => FloatValue.create(:value => 0.1), :unit => Unit.find_by_name("% vol/vol"), :property => Property.find_by_name("concentration")) 
-    lps = Compound.new(:name => "Lipopolysaccharide") unless lps = Compound.find_by_name("Lipopolysaccharide")
-
-    concentration_row = 7 
-
-    durations = {
-      24 => GenericData.create(:value => FloatValue.create(:value => 24), :unit => hours, :experiment => experiment),
-      48 => GenericData.create(:value => FloatValue.create(:value => 48), :unit => hours, :experiment => experiment)
-    }
-
-    Property.create(:name => "concentration") unless Property.find_by_name("concentration")
-    growth_condition =  @xl.cell(66,'F').to_s + " cells/well seeded"
-    
-    id = 1
-
-    controls.each do |n,columns|
-      columns.each do |column|
-        measurements.each do |t,m|
-          # first sheet
-          b = BioSample.create(:name => id.to_s, :experiment => experiment, :cell_line => cell_line, :cell_type => cell_type, :organism => organism, :organism_part => organism_part, :sex => sex, :growth_condition => growth_condition)
-          id += 1
-          treatment = nil
-          case n
-          when "medium" 
-            treatment = Treatment.create(:experiment => experiment, :bio_sample => b, :duration => durations[t] ) 
-          when "LPS" 
-            treatment = Treatment.create(:experiment => experiment, :bio_sample => b, :duration => durations[t], :solvent => dmso, :solvent_concentration => dmso_concentration, :compound => lps )
-          when "0.1% DMSO"
-            treatment = Treatment.create(:experiment => experiment, :bio_sample => b, :duration => durations[t], :solvent => dmso, :solvent_concentration => dmso_concentration ) 
+    # compounds
+    col = ranges[:compounds][:start_column]
+    ranges[:compounds][:nr_columns].times do
+      name = xl.cell(ranges[:compounds][:row],col)
+      ranges[:concentrations][:nr].times do 
+        conc = xl.cell(ranges[:concentrations][:row],col)
+        ranges[:replicates].times do 
+          treatment = {
+            :compound => name,
+            :concentration => conc,
+            :measurements => {}
+          }
+          ranges[:measurement_rows].each do |m,row|
+            treatment[:measurements][m] = xl.cell(row,col)
           end
-          m.each do |p,row|
-            value = FloatValue.create(:value => @xl.cell(column,row).to_f)
-            d = GenericData.create(:experiment => experiment, :value => value, :property => properties[p], :unit => units[p], :sample => treatment) if treatment # add unit 
-          end
-          # second sheet
-          @xl.default_sheet = @xl.sheets[1]
-          measurements_sheet2[t].each do |p,row|
-            value = FloatValue.create(:value => @xl.cell(column,row).to_f)
-            d = GenericData.create(:experiment => experiment, :value => value, :property => properties[p], :unit => units[p], :sample => treatment) if treatment # add unit 
-          end
-          @xl.default_sheet = @xl.sheets.first
+          col += 1
+          data[:treatments] << treatment
         end
       end
     end
 
-    compounds.each do |n,c|
+    data 
 
-      c[:compound].experiments << experiment
+  end
 
-      4.times do |i| # concentrations
+  def new
 
-        concentration_column = c[:start_column] + 2*i
-        concentration_value = @xl.cell(concentration_row, concentration_column)
-        concentration = GenericData.create(:experiment => experiment, :value => FloatValue.create(:value => concentration_value.to_f), :property => Property.find_by_name("concentration"), :unit => Unit.find_by_name("mM")) 
+    flash[:warning] = "You did not send an Excel file" unless params[:file].content_type == 'application/vnd.ms-excel'
+    flash[:notice] = "#{params[:file].original_filename} uploaded"
 
-        2.times do |j| # replicates
-          measurement_column = c[:start_column] + 2*i + j
-          measurements.each do |t,m|
-            b = BioSample.create(:name => id.to_s, :experiment => experiment, :cell_line => cell_line, :cell_type => cell_type, :organism => organism, :organism_part => organism_part, :sex => sex, :growth_condition => growth_condition)
-            id += 1
-            treatment = Treatment.create(:experiment => experiment, :bio_sample => b, :duration => durations[t], :dose => concentration, :compound => c[:compound], :solvent => dmso, :solvent_concentration => dmso_concentration ) 
-            m.each do |p,row|
-              value = FloatValue.create(:value => @xl.cell(row,measurement_column).to_f)
-              d = GenericData.create(:experiment => experiment, :property => properties[p], :value => value, :unit => units[p], :sample => treatment)
+    # upload sheet
+    tmp_excel = RAILS_ROOT+'/public/wp8_submissions/'+params[:file].original_filename
+    File.mv(params[:file].path,tmp_excel)
+    data = parse(Excel.new(tmp_excel))
+
+    wp = Workpackage.find_by_nr(8)
+
+    experiment = Experiment.create(
+      :name => params[:file].original_filename,
+      :title => data[:experiment][:title],
+      :description => data[:experiment][:description] + " [Experiment Nr. " + data[:experiment][:number].to_s + "]",
+      :workpackage => wp,
+      :date => Date.today
+    )
+
+    organisation = Organisation.create(
+      :name => data[:organisation][:name],
+      :address => data[:organisation][:address]
+    ) unless organisation = Organisation.find_by_name(data[:organisation][:name])
+
+    person = Person.create(
+      :first_name => data[:person][:first_name], 
+      :last_name => data[:person][:last_name], 
+      :email => data[:person][:email],
+      :phone => data[:person][:phone],
+      :organisation => organisation
+    ) unless person = Person.find_by_email(data[:person][:email])
+
+    person.experiments << experiment
+    person.save
+
+    cell_line = CellLine.find_by_name(data[:cell_line])
+
+    conc_unit = nil
+    case data[:concentration_unit]
+    when "mM"
+      conc_unit = Unit.find_by_name("mM")
+    else
+      conc_unit = Unit.find_by_name("uM")
+    end
+
+    duration = Duration.find_by_value_and_unit_id(data[:treatment_time],Unit.find_by_name("hours").id)
+
+    bio_sample_name = 0
+    data[:treatments].each do |t|
+
+      bio_sample_name += 1
+      bio_sample = BioSample.create(:name => bio_sample_name, :cell_line => cell_line)
+      concentration = Concentration.create(:value => t[:concentration], :unit => conc_unit) unless concentration = Concentration.find_by_value_and_unit_id(t[:concentration], conc_unit.id)
+      treatment = nil
+
+      case t[:compound]
+      when /id:/
+        compound_id = t[:compound].sub(/.*\[id: (\d+)\]/,'\1').to_i
+        compound = Compound.find(compound_id)
+        treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :concentration => concentration, :experiment => experiment)
+      when "medium"
+        compound = Compound.find_by_name("Medium")
+        treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :experiment => experiment)
+      when 'LPS'
+        compound = Compound.find_by_name("Lipopolysaccharide (LPS)")
+        treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :experiment => experiment)
+      when /DMSO/
+        solvent = Solvent.find(10)
+        treatment = Treatment.create(:duration => duration, :bio_sample => bio_sample, :solvent => solvent, :experiment => experiment)
+      end
+
+      if treatment
+        t[:measurements].each do |name,result|
+
+          unless result.blank?
+            case name
+            when /Cell survival|CD86 positive cells/
+              unit = Unit.find_by_name('%')
+            when "CXCL8 relative production" 
+              unit = Unit.find_by_name('pg/mL/10^6 cells')
+            else
+              unit = nil
             end
-            # second sheet
-            @xl.default_sheet = @xl.sheets[1]
-            measurements_sheet2[t].each do |p,row|
-              value = FloatValue.create(:value => @xl.cell(row,measurement_column).to_f)
-              d = GenericData.create(:experiment => experiment, :property => properties[p], :value => value, :unit => units[p], :sample => treatment)
-            end
-            @xl.default_sheet = @xl.sheets.first
+
+            property = Property.find_by_name(name)
+            value = FloatValue.create(:value => result) unless value = FloatValue.find_by_value(result)
+            Measurement.create(:treatment => treatment, :property => property, :value => value, :unit => unit, :experiment => experiment)
           end
+
         end
       end
 
