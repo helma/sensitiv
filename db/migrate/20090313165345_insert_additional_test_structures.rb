@@ -2,6 +2,7 @@ class InsertAdditionalTestStructures < ActiveRecord::Migration
   def self.up
 
     remove_column :treatments, :outcome_id
+    Treatment.reset_column_information
     Property.create(:name => "Water solubility")
 
     new_training_compounds = [
