@@ -1,19 +1,9 @@
-phys_chem f maleic anhydride, gluturaldehyde
-
-
-wp8 fragen
-	experiment = replicate oder id
-	1e,2e physical replicates
-	nr test structures
-	solvent
-	
-controller:
-  help updaten
 --
 deploy:
-	francois daten einfuegen
+	staging
+	production
 
-llna_daten insert
+	francois daten einfuegen
 
 migrations:
 	
@@ -36,25 +26,5 @@ data submission/edit
 
 exception handling
 
+--
 done
-template name/migration
-spreadsheet:
-	compound liste
-	outcomes mit line breaks anzeigen
-	excel upload f neues template aktualisieren
-	costanza daten einfuegen: per hand (=test)
-  template einfuegen
-  test compounds einfuegen
-template:
-  - all 29 chemicals
-  - millimolar and micromolar concentrations 
-
-
-
-	neue phys_chem daten werden nicht angezeigt (duerften laut console in db sein)
-	protokolle richtig zuordnen (samples, treatments, measurements, calculations)
-	cleanup (nicht benuetzte tabellen entfernen, daten checken u ggf entfernen)
-	llna f compounds
-	sort treatments
-	affy file download, sonst ohne link
-	home/index updaten
