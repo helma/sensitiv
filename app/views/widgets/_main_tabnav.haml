@@ -1,0 +1,13 @@
+- render_tabnav :main, :generate_css => false do 
+  - add_tab :name => 'Home', :link => {:controller=>'home'}
+  - add_tab :name => 'Internal website', :link => {:controller=> 'website'}
+  - ['protocols','experiments','compounds'].each do |name|
+    - add_tab do |t|
+      - t.named name.camelize
+      - t.titled "Go to #{name.camelize}"
+      - t.links_to :controller => name
+ 
+
+  - add_tab :name => 'Data submission ', :title => "Go to data submission", :link => {:controller=>'file_upload'}
+  - add_tab :name => 'Help', :title => "Go to Help", :link => {:controller=>'help'}
+
