@@ -79,7 +79,7 @@ class CleanupProtocols < ActiveRecord::Migration
         p.file = File.basename(p.document.file)
         dir = "#{RAILS_ROOT}/public/protocol/file/0000/#{sprintf("%04d",p.id)}"
         File.makedirs dir
-        File.mv("#{RAILS_ROOT}/public/file_document/file/#{p.document.id}/#{p.name}","#{dir}/#{p.name}")
+        File.cp("#{RAILS_ROOT}/public/file_document/file/#{p.document.id}/#{p.name}","#{dir}/#{p.name}")
       end
       p.description = p.name if p.description.blank?
       p.save

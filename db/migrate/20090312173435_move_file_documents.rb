@@ -8,7 +8,7 @@ class MoveFileDocuments < ActiveRecord::Migration
         name = File.basename(v.file)
         dir = "#{RAILS_ROOT}/public/file_document/file/0000/#{sprintf("%04d",v.id)}"
         File.makedirs dir
-        File.mv("#{RAILS_ROOT}/public/file_document/file/#{v.id}/#{name}","#{dir}/#{name}")
+        File.cp("#{RAILS_ROOT}/public/file_document/file/#{v.id}/#{name}","#{dir}/#{name}")
       end
     end
   end
