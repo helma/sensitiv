@@ -16,7 +16,8 @@ fi
 
 export RAILS_ROOT=`pwd`
 source script/install/variables
-git_url=http://opentox.org/git/ch
+#git_url=http://opentox.org/git/ch
+git_url=/home/ch/git/
 
 mkdir -p $bin_dir
 mkdir -p $plugin_dir
@@ -72,12 +73,12 @@ rm -rf vendor/plugins/haml && vendor/bin/haml --rails .
 git_install $git_url/engines.git                rails-2-1-stable $plugin_dir/engines 
 git_install $git_url/active_scaffold.git        1.1.1            $plugin_dir/active_scaffold
 git_install $git_url/file_column.git            rails-2-1-stable $plugin_dir/file_column
-git_install $git_url/exception_notification.git rails-2-1-stable $plugin_dir/exception_notification
+#git_install $git_url/exception_notification.git rails-2-1-stable $plugin_dir/exception_notification
 git_install git://github.com/paolodona/rails-widgets.git master  $plugin_dir/rails-widgets
 
 
 # install opentox plugins
 #						origin                                             version     destination         post installation hook
-git_install git://github.com/helma/opentox-plugin.git          production $plugin_dir/opentox script/install/opentox
+git_install git://github.com/helma/rails-chemistry.git          master $plugin_dir/rchem script/install/rchem
 
 # data and validation results
