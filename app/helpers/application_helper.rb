@@ -19,9 +19,11 @@ module ApplicationHelper
 
   def audited_column(record)
     if record.audited
-      image_tag "check_mark.png", :alt => "yes", :size => "8x8"
+      #image_tag "check_mark.png", :alt => "yes", :size => "8x8"
+      yes
     else
-      link_to("<b>--</b>", :action => :audit, :id => record.id)
+      #link_to("<b>--</b>", :action => :audit, :id => record.id)
+      link_to("no", :action => :audit, :id => record.id)
     end
   end
     
