@@ -32,3 +32,4 @@ case `hostname` in
 esac
 
 haml --rails .
+rake rchem:compile
