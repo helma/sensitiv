@@ -41,14 +41,14 @@ class FileUploadController <  ActionController::Base
     xl.default_sheet = xl.sheets[1]
     data[:cell_line] = xl.cell(1,3),
     data[:treatment_time] = xl.cell(2,3),
-    data[:concentration_unit]  = xl.cell(2,3)
+    #data[:concentration_unit]  = xl.cell(2,3)
 
     # read ranges
     ranges = {
 
       :replicates => 2,
 
-      :control_row => 9,
+      :control_row => 8,
 
       :control_columns => {
         :medium =>  2,
@@ -57,23 +57,23 @@ class FileUploadController <  ActionController::Base
       }, 
 
       :compounds => {
-        :row => 8,
+        :row => 7,
         :start_column => 12, # 'L'
         :nr_columns => 4
       },
 
       :concentrations => {
-        :row => 9,
+        :row => 8,
         :nr => 5,
         :column_size => 2
       },
 
       :measurement_rows => {
-        "Cell survival" => 11,
-        "CD86 RFI" => 19,
-        "CD86 positive cells" => 26,
-        "CD86 stimulation index" => 33,
-        "CXCL8 relative production" => 40
+        "Cell survival" => 10,
+        "CD86 RFI" => 18,
+        "CD86 positive cells" => 25,
+        "CD86 stimulation index" => 32,
+        "CXCL8 relative production" => 39
       }
 
     }
@@ -101,12 +101,14 @@ class FileUploadController <  ActionController::Base
     col = ranges[:compounds][:start_column]
     ranges[:compounds][:nr_columns].times do
       name = xl.cell(ranges[:compounds][:row],col)
+      conc_unit = xl.cell(ranges[:compounds][:row],col+9)
       ranges[:concentrations][:nr].times do 
         conc = xl.cell(ranges[:concentrations][:row],col)
         ranges[:replicates].times do 
           treatment = {
             :compound => name,
             :concentration => conc,
+            :concentration_unit => conc_unit,
             :measurements => {}
           }
           ranges[:measurement_rows].each do |m,row|
@@ -164,14 +166,6 @@ class FileUploadController <  ActionController::Base
     cell_type = CellType.find_by_name("acute myelomonocytic leukemia")
     sex = Sex.find_by_name("male")
 
-    conc_unit = nil
-    case data[:concentration_unit]
-    when "mM"
-      conc_unit = Unit.find_by_name("mM")
-    else
-      conc_unit = Unit.find_by_name("uM")
-    end
-
     duration = Duration.find_by_value_and_unit_id(data[:treatment_time],Unit.find_by_name("hours").id)
 
     bio_sample_name = 0
@@ -179,6 +173,15 @@ class FileUploadController <  ActionController::Base
 
       bio_sample_name += 1
       bio_sample = BioSample.create(:name => bio_sample_name, :cell_line => cell_line, :organism => organism, :organism_part => organism_part, :cell_type => cell_type, :sex => sex)
+
+      conc_unit = nil
+      case t[:concentration_unit]
+      when "mM"
+        conc_unit = Unit.find_by_name("mM")
+      else
+        conc_unit = Unit.find_by_name("uM")
+      end
+
       concentration = Concentration.create(:value => t[:concentration], :unit => conc_unit) unless concentration = Concentration.find_by_value_and_unit_id(t[:concentration], conc_unit.id)
       treatment = nil
 
