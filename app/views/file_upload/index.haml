@@ -3,11 +3,12 @@
   %h2 Submit workpackage 8 results:
   %ol
     %li
-      Download the
+      Download our
       = link_to "Excel template" , :controller => :protocols, :action => :show, :id => Protocol.find_by_name("wp8_template.xls").id
+      %i (do not use your own sheets)
     %li Enter administrative information on sheet 1
     %li Enter your experimental results on sheet 2
-    %li Upload the completed Excel sheets:
+    %li Save and upload the completed Excel file:
     =form_tag({:action => 'new'}, {:multipart => true})
     =file_field_tag 'file'
     =submit_tag 'Upload'

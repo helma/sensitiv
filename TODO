@@ -1,3 +1,4 @@
+staging mit passenger
 --
 deploy:
 	staging

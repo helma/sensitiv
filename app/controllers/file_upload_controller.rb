@@ -159,6 +159,10 @@ class FileUploadController <  ActionController::Base
     person.save
 
     cell_line = CellLine.find_by_name(data[:cell_line])
+    organism = Organism.find_by_name('human')
+    organism_part = OrganismPart.find_by_name("blood")
+    cell_type = CellType.find_by_name("acute myelomonocytic leukemia")
+    sex = Sex.find_by_name("male")
 
     conc_unit = nil
     case data[:concentration_unit]
@@ -174,7 +178,7 @@ class FileUploadController <  ActionController::Base
     data[:treatments].each do |t|
 
       bio_sample_name += 1
-      bio_sample = BioSample.create(:name => bio_sample_name, :cell_line => cell_line)
+      bio_sample = BioSample.create(:name => bio_sample_name, :cell_line => cell_line, :organism => organism, :organism_part => organism_part, :cell_type => cell_type, :sex => sex)
       concentration = Concentration.create(:value => t[:concentration], :unit => conc_unit) unless concentration = Concentration.find_by_value_and_unit_id(t[:concentration], conc_unit.id)
       treatment = nil
 
