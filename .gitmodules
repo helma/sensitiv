@@ -1,15 +1,6 @@
 [submodule "vendor/plugins/rchem"]
 	path = vendor/plugins/rchem
 	url = git@github.com:helma/rails-chemistry.git
-[submodule "vendor/plugins/active_scaffold"]
-	path = vendor/plugins/active_scaffold
-	url = ssh://sens-it-iv.fdm.uni-freiburg.de/home/ch/git/active_scaffold.git
-[submodule "vendor/plugins/engines"]
-	path = vendor/plugins/engines
-	url = ssh://sens-it-iv.fdm.uni-freiburg.de/home/ch/git/engines.git
-[submodule "vendor/plugins/file_column"]
-	path = vendor/plugins/file_column
-	url = ssh://sens-it-iv.fdm.uni-freiburg.de/home/ch/git/file_column.git
 [submodule "vendor/plugins/rails-widgets"]
 	path = vendor/plugins/rails-widgets
 	url = git://github.com/paolodona/rails-widgets.git

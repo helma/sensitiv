@@ -1,4 +1,6 @@
-vendor/*
+vendor/plugins/rchem
+vendor/plugins/rails-widgets
+vendor/plugins/haml
 public/data
 db/*sqlite3
 log/*.log
