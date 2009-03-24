@@ -1,4 +1,0 @@
-doc	application/msword
-html	text/html
-pdf	application/pdf
-xls	application/vnd.ms-excel

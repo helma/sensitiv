@@ -6,7 +6,7 @@ class Experiment < ActiveRecord::Base
 	has_many :outcomes
 	has_many :bio_samples
   has_many :treatments
-  has_many :measurements
+  #has_many :measurements
   belongs_to :workpackage
 
 end
