@@ -9,6 +9,8 @@ namespace "sensitiv" do
   task :copy_file_documents do
     sh "rsync -avz --delete sens-it-iv.fdm.uni-freiburg.de:/var/www/sensitiv-production/public/file_document/ public/file_document/"
     sh "rsync -avz --delete sens-it-iv.fdm.uni-freiburg.de:/var/www/sensitiv-production/public/protocol/ public/protocol/"
+    sh "rsync -avz --delete sens-it-iv.fdm.uni-freiburg.de:/var/www/sensitiv-production/public/wp1_submissions/ public/wp1_submissions/"
+    sh "rsync -avz --delete sens-it-iv.fdm.uni-freiburg.de:/var/www/sensitiv-production/public/wp1_submissions/ public/wp8_submissions/"
   end
 
   desc "Sync development database with current production database"
@@ -18,7 +20,8 @@ namespace "sensitiv" do
   end
 
   desc "Sync production database with current production database"
-  task "db:production:sync" => [:copy_production_db, :copy_file_documents]
+  #task "db:production:sync" => [:copy_production_db, :copy_file_documents]
+  task "db:production:sync" => [:copy_production_db]
 
 end
 
