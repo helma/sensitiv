@@ -13,10 +13,9 @@ require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 
 # R and Java configuration files 
 require "R.rb"
-require "java.rb"
 
 Rails::Initializer.run do |config|
-  config.plugins = [:engines, :rchem, :all]
+  config.plugins = [:engines, :all]
   # load gems from vendor/gems
   config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
       File.directory?(lib = "#{dir}/lib") ? lib : dir
@@ -70,7 +69,7 @@ end
 
 # Include your application configuration below
 
-ENV['CLASSPATH'] = "#{RAILS_ROOT}/vendor/plugins/rchem/lib/java/:#{RAILS_ROOT}/vendor/plugins/rchem/lib/java/cdk-1.1.svn-19012008.jar"
+#ENV['CLASSPATH'] = "#{RAILS_ROOT}/vendor/plugins/rchem/lib/java/:#{RAILS_ROOT}/vendor/plugins/rchem/lib/java/cdk-1.1.svn-19012008.jar"
 ENV['PATH'] =  "#{RAILS_ROOT}/vendor/bin:" + ENV['PATH']
 ENV['GEM_HOME'] = "#{RAILS_ROOT}/vendor/lib/ruby/gems/1.8"
 ENV['GEM_PATH'] = "#{RAILS_ROOT}/vendor/lib/ruby/gems/1.8"
