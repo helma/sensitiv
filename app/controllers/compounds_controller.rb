@@ -29,17 +29,7 @@ class CompoundsController < ApplicationController
 
     # show
     config.show.link.page = true
-		show.columns = [:cas, :smiles, :training_compound, :comment, :chemid]#, :datas, :sensitiser
-
-=begin
-    # update
-    config.update.link.page = true
-    config.update.columns = [:name, :cas, :smiles, :training_compound, :comment]
-
-    # create
-    config.create.link.page = true
-    config.create.columns = [:name, :cas, :smiles, :training_compound, :comment]
-=end
+		show.columns = [:cas, :smiles, :training_compound, :comment, :chemid]
 
 	end
 
@@ -118,16 +108,12 @@ class CompoundsController < ApplicationController
 
 	def display_smiles
 
-    # sanitize smiles
-    smiles = params[:smiles].chomp.gsub(/\s+/,'')
-    display = Rjb::import('DisplayStructure').new
-    image = display.displaySmiles(smiles)
-    if image
-      out=Rjb::import('java.io.ByteArrayOutputStream').new
-      Rjb::import('javax.imageio.ImageIO').write(image, "png", out)
-      send_data(out.toByteArray, :type => "image/png", :disposition => "inline", :filename => "molecule.png")
-    else
-      "Cannot display \"#{smiles}\""
+    begin
+      smiles = params[:smiles].chomp.gsub(/\s+/,'')
+      image =  Net::HTTP.post_form(URI.parse('http://webservices.in-silico.de/cdk-structure-visualizer/display'), {'smiles'=>smiles}).body
+      send_data(image, :type => "image/png", :disposition => "inline", :filename => "molecule.png")
+    rescue
+      render :text => smiles
     end
 
 	end

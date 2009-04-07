@@ -1,19 +1,14 @@
 #main
+  =flash[:warning]
+  =flash[:notice]
 
-  %h2 Submit workpackage 8 results:
-  %ol
-    %li
-      Download our
-      = link_to "Excel template" , :controller => :protocols, :action => :show, :id => Protocol.find_by_name("wp8_template.xls").id
-      %i (do not use your own sheets)
-    %li Enter administrative information on sheet 1
-    %li Enter your experimental results on sheet 2
-    %li Save and upload the completed Excel file:
-    =form_tag({:action => 'new'}, {:multipart => true})
-    =file_field_tag 'file'
-    =submit_tag 'Upload'
+  = form_tag :action => :new
+  %h2
+    Submit data for workpackage
+    = select_tag :workpackage, options_for_select([1,8],nil)
+    = submit_tag 'Proceed'
 
-  %h2 Submit data for other workpackages:
+  %h2 Data submission for other workpackages:
   Please send an Excel sheet with a representative example to
   = mail_to "helma@in-silico.de"
   and we will create a template for your data submission. Please understand, that we can use only structured data for the database. That means that we cannot use e.g. images, pdf files, powerpoint or word documents.

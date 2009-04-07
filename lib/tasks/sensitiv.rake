@@ -12,7 +12,8 @@ namespace "sensitiv" do
   end
 
   desc "Sync development database with current production database"
-  task "db:development:sync" => [:copy_production_db, :copy_file_documents] do
+  #task "db:development:sync" => [:copy_production_db, :copy_file_documents] do
+  task "db:development:sync" => [:copy_production_db] do
     sh "cp db/production.sqlite3 db/development.sqlite3"
   end
 
