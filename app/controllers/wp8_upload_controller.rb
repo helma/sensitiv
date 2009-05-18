@@ -147,7 +147,7 @@ class Wp8UploadController <  ActionController::Base
 
     duration = Duration.find_by_value_and_unit_id(data[:treatment_time],Unit.find_by_name("hours").id)
     solvent = nil
-    unless data[:solvent_concentration].to_i == 0
+    unless data[:solvent_concentration].to_f == 0
       solvent_concentration = Concentration.find_or_create_by_value_and_unit_id(data[:solvent_concentration], Unit.find_by_name("% vol/vol").id)
       dmso = Compound.find_by_name('DMSO')
       solvent = Solvent.find_by_compound_id_and_concentration_id(dmso,solvent_concentration)
