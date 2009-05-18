@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090406121750) do
+ActiveRecord::Schema.define(:version => 20090429150222) do
 
   create_table "bio_samples", :force => true do |t|
     t.string  "name"
@@ -63,6 +63,29 @@ ActiveRecord::Schema.define(:version => 20090406121750) do
 
   create_table "developmental_stages", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "dose_response_curves", :force => true do |t|
+    t.integer  "compound_id"
+    t.integer  "result_id"
+    t.integer  "cell_line_id"
+    t.integer  "concentration_unit_id"
+    t.integer  "duration_id"
+    t.string   "image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "dose_response_curves_dose_response_sheets", :id => false, :force => true do |t|
+    t.integer "dose_response_curve_id"
+    t.integer "dose_response_sheet_id"
+  end
+
+  create_table "dose_response_sheets", :force => true do |t|
+    t.integer  "cell_line"
+    t.integer  "duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "durations", :force => true do |t|
@@ -165,6 +188,11 @@ ActiveRecord::Schema.define(:version => 20090406121750) do
     t.string "email"
     t.string "phone"
     t.string "organisation_id"
+  end
+
+  create_table "plugin_schema_info", :id => false, :force => true do |t|
+    t.string  "plugin_name"
+    t.integer "version"
   end
 
   create_table "potencies", :force => true do |t|

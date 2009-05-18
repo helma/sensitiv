@@ -13,8 +13,8 @@
     %li Enter Local Lymph Node Assay results on sheet 3
     %li Enter physical/chemical properties on sheet 4
     %li Save and upload the completed Excel file:
-    =form_tag({:action => 'new'}, {:multipart => true})
-    =hidden_field_tag :workpackage,  1
-    =file_field_tag 'file'
-    =submit_tag 'Upload'
+    - form_tag({:action => 'new'}, {:multipart => true}) do
+      =hidden_field_tag :workpackage,  1
+      =file_field_tag 'file'
+      =submit_tag 'Upload'
 

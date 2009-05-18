@@ -11,8 +11,7 @@
     %li Enter administrative information on sheet 1
     %li Enter your experimental results on sheet 2
     %li Save and upload the completed Excel file:
-    =form_tag({:action => 'new'}, {:multipart => true})
-    =hidden_field_tag :workpackage,  8
-    =file_field_tag 'file'
-    =submit_tag 'Upload'
-
+    - form_tag({:action => 'new'}, {:multipart => true}) do
+      =hidden_field_tag :workpackage,  1
+      =file_field_tag 'file'
+      =submit_tag 'Upload'

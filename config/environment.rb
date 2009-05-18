@@ -8,20 +8,13 @@ RAILS_GEM_VERSION = '2.1.2'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 
 
 # R and Java configuration files 
 require "R.rb"
 
 Rails::Initializer.run do |config|
-  config.plugins = [:engines, :all]
-  # load gems from vendor/gems
-  config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
-      File.directory?(lib = "#{dir}/lib") ? lib : dir
-  end
-
-  config.load_paths += %W( #{RAILS_ROOT}/vendor/src/rubygems/lib )
+  config.plugins = [:all]
   # Settings in config/environments/* take precedence those specified here
   config.action_controller.session = { :session_key => "_myapp_session", :secret => "5088f3e9d90958b1a8d2f5832f00e8ed" }
   
@@ -30,8 +23,8 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-  config.load_paths += %W( #{RAILS_ROOT}/vendor/bin )
-  config.load_paths -= %W( /usr/local/ )
+  #config.load_paths += %W( #{RAILS_ROOT}/vendor/bin )
+  #config.load_paths += %W( /usr/local/ )
 
   # Force all environments to use the same logger level 
   # (by default production uses :info, the others :debug)

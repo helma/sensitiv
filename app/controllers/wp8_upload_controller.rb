@@ -16,32 +16,21 @@ class Wp8UploadController <  ActionController::Base
     
     # first sheet
     xl.default_sheet = xl.sheets[0]
-    data = {
 
+    data = {
       :experiment => {
         :number => xl.cell(2,2),
         :title => xl.cell(3,2),
         :description => xl.cell(4,2)
       },
-
-      :person => {
-        :first_name => xl.cell(7,2),
-        :last_name => xl.cell(8,2),
-        :email => xl.cell(9,2),
-        :phone => xl.cell(10,2)
-      },
-
-      :organisation => {
-        :name => xl.cell(13,2),
-        :address => xl.cell(14,2)
-      }
+      :submitter => xl.cell(6,2),
     }
 
     # second sheet
     xl.default_sheet = xl.sheets[1]
     data[:cell_line] = xl.cell(1,3),
     data[:treatment_time] = xl.cell(2,3),
-    #data[:concentration_unit]  = xl.cell(2,3)
+    data[:solvent_concentration] = xl.cell(8,7),
 
     # read ranges
     ranges = {
@@ -58,13 +47,13 @@ class Wp8UploadController <  ActionController::Base
 
       :compounds => {
         :row => 7,
-        :start_column => 12, # 'L'
-        :nr_columns => 4
+        :start_column => 10, # 'J'
+        :nr => 4
       },
 
       :concentrations => {
         :row => 8,
-        :nr => 5,
+        :nr => 4,
         :column_size => 2
       },
 
@@ -99,9 +88,9 @@ class Wp8UploadController <  ActionController::Base
 
     # compounds
     col = ranges[:compounds][:start_column]
-    ranges[:compounds][:nr_columns].times do
+    ranges[:compounds][:nr].times do
       name = xl.cell(ranges[:compounds][:row],col)
-      conc_unit = xl.cell(ranges[:compounds][:row],col+9)
+      conc_unit = xl.cell(ranges[:compounds][:row],col+7)
       ranges[:concentrations][:nr].times do 
         conc = xl.cell(ranges[:concentrations][:row],col)
         ranges[:replicates].times do 
@@ -118,6 +107,7 @@ class Wp8UploadController <  ActionController::Base
           data[:treatments] << treatment
         end
       end
+      col += 1
     end
 
     data 
@@ -144,19 +134,8 @@ class Wp8UploadController <  ActionController::Base
       :date => Date.today
     )
 
-    organisation = Organisation.create(
-      :name => data[:organisation][:name],
-      :address => data[:organisation][:address]
-    ) unless organisation = Organisation.find_by_name(data[:organisation][:name])
-
-    person = Person.create(
-      :first_name => data[:person][:first_name], 
-      :last_name => data[:person][:last_name], 
-      :email => data[:person][:email],
-      :phone => data[:person][:phone],
-      :organisation => organisation
-    ) unless person = Person.find_by_email(data[:person][:email])
-
+    submitter_id = data[:submitter].sub(/.*\[id: (\d+)\]/,'\1').to_i
+    person = Person.find(submitter_id)
     person.experiments << experiment
     person.save
 
@@ -167,6 +146,12 @@ class Wp8UploadController <  ActionController::Base
     sex = Sex.find_by_name("male")
 
     duration = Duration.find_by_value_and_unit_id(data[:treatment_time],Unit.find_by_name("hours").id)
+    solvent = nil
+    unless data[:solvent_concentration].to_i == 0
+      solvent_concentration = Concentration.find_or_create_by_value_and_unit_id(data[:solvent_concentration], Unit.find_by_name("% vol/vol").id)
+      dmso = Compound.find_by_name('DMSO')
+      solvent = Solvent.find_by_compound_id_and_concentration_id(dmso,solvent_concentration)
+    end
 
     bio_sample_name = 0
     data[:treatments].each do |t|
@@ -182,14 +167,14 @@ class Wp8UploadController <  ActionController::Base
         conc_unit = Unit.find_by_name("uM")
       end
 
-      concentration = Concentration.create(:value => t[:concentration], :unit => conc_unit) unless concentration = Concentration.find_by_value_and_unit_id(t[:concentration], conc_unit.id)
+      concentration = Concentration.find_or_create_by_value_and_unit_id(t[:concentration], conc_unit.id)
       treatment = nil
 
       case t[:compound]
       when /id:/
         compound_id = t[:compound].sub(/.*\[id: (\d+)\]/,'\1').to_i
         compound = Compound.find(compound_id)
-        treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :concentration => concentration, :experiment => experiment)
+        treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :concentration => concentration, :solvent => solvent, :experiment => experiment)
       when "medium"
         compound = Compound.find_by_name("Medium")
         treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :experiment => experiment)
@@ -197,8 +182,7 @@ class Wp8UploadController <  ActionController::Base
         compound = Compound.find_by_name("Lipopolysaccharide (LPS)")
         treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :experiment => experiment)
       when /DMSO/
-        solvent = Solvent.find(10)
-        treatment = Treatment.create(:duration => duration, :bio_sample => bio_sample, :solvent => solvent, :experiment => experiment)
+        treatment = Treatment.create(:duration => duration, :bio_sample => bio_sample, :solvent => solvent, :experiment => experiment) unless data[:solvent_concentration].to_i == 0
       end
 
       if treatment
@@ -227,5 +211,49 @@ class Wp8UploadController <  ActionController::Base
     redirect_to :action => :index
     
   end
+
+=begin
+  def solvent(compound)
+
+    solvents = {
+      "1-Chloro-2,4-dinitrobenzene" => {
+        :solvent => 'DMSO',
+        :concentration => 0.1},
+      "Salicylic acid" => {
+        :solvent => 'DMSO',
+        :concentration => 0.1},
+      "Eugenol" => {
+        :solvent => 'DMSO',
+        :concentration => 0.2},
+      "Oxazolone" => {
+        :solvent => 'DMSO',
+        :concentration => 0.2},
+      "2-Mercaptobenzothiazolone (MBT)" => {
+        :solvent => 'DMSO',
+        :concentration => 0.2},
+      "Diethyl Phthalate" => {
+        :solvent => 'DMSO',
+        :concentration => 0.2},
+      "Octanoic acid" => {
+        :solvent => 'DMSO',
+        :concentration => 0.2},
+      "Cinnamic Aldehyde" => { :solvent => nil },
+      "Sodium lauryl sulphate" => { :solvent => nil },
+      "Glyoxal" => { :solvent => nil },
+      "Glycerol" => { :solvent => nil },
+      "Lactic Acid" => { :solvent => nil }
+    }
+
+    if solvents[compound.name][:solvent].nil?
+      nil
+    else
+      unit = Unit.find_by_name("% vol/vol")
+      conc = Concentration.find_by_value_and_unit_id(solvents[compound.name][:concentration],unit.id)
+      dmso = Compound.find_by_name('DMSO')
+      Solvent.find_by_compound_id_and_concentration_id(dmso,conc)
+    end
+
+  end
+=end
 
 end

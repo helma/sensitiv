@@ -17,7 +17,7 @@ class CompoundsController < ApplicationController
 		config.columns[:cas].label = 'CAS'
 		config.columns[:smiles].label = '2D Structure'
 		config.columns[:chemid].label = 'External Data'
-    config.columns[:training_compound].ui_type = :checkbox
+    config.columns[:training_compound].form_ui = :checkbox
 
     columns[:cas].set_link('show', :page => true)
     columns[:name].set_link('show', :page => true)
