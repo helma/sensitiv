@@ -1,4 +1,4 @@
-require 'rsruby'
+#require 'rsruby'
 class DataAnalysisController < ApplicationController
 
   def index
