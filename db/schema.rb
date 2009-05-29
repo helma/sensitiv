@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090518110009) do
+ActiveRecord::Schema.define(:version => 20090520152826) do
 
   create_table "bio_samples", :force => true do |t|
     t.string  "name"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20090518110009) do
     t.string  "description"
     t.boolean "audited",        :default => false
     t.integer "workpackage_id"
+    t.integer "ring_trial_id"
   end
 
   create_table "experiments_people", :id => false, :force => true do |t|
@@ -216,6 +217,16 @@ ActiveRecord::Schema.define(:version => 20090518110009) do
   create_table "protocols_treatments", :id => false, :force => true do |t|
     t.integer "treatment_id"
     t.integer "protocol_id"
+  end
+
+  create_table "ring_trials", :force => true do |t|
+    t.string   "name"
+    t.string   "endpoint_names"
+    t.string   "compound_names"
+    t.string   "dose_response_curves"
+    t.string   "control_dose_response_curves"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sessions", :force => true do |t|

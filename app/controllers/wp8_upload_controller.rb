@@ -20,10 +20,9 @@ class Wp8UploadController <  ActionController::Base
     data = {
       :experiment => {
         :number => xl.cell(2,2),
-        :title => xl.cell(3,2),
-        :description => xl.cell(4,2)
+        :ring_trial => xl.cell(3,2),
       },
-      :submitter => xl.cell(6,2),
+      :submitter => xl.cell(5,2),
     }
 
     # second sheet
@@ -87,9 +86,11 @@ class Wp8UploadController <  ActionController::Base
     end
 
     # compounds
+    data[:compound_ids] = []
     col = ranges[:compounds][:start_column]
     ranges[:compounds][:nr].times do
       name = xl.cell(ranges[:compounds][:row],col)
+      data[:compound_ids] << name.sub(/.*\[id: (\d+)\]/,'\1').to_i if name.match(/id:/)
       conc_unit = xl.cell(ranges[:compounds][:row],col+7)
       ranges[:concentrations][:nr].times do 
         conc = xl.cell(ranges[:concentrations][:row],col)
@@ -126,11 +127,14 @@ class Wp8UploadController <  ActionController::Base
 
     wp = Workpackage.find_by_nr(8)
 
+    ring_trial = RingTrial.find_or_create_by_id(data[:experiment][:ring_trial].to_i)
+
     experiment = Experiment.create(
       :name => params[:file].original_filename,
-      :title => data[:experiment][:title],
-      :description => data[:experiment][:description] + " [Experiment Nr. " + data[:experiment][:number].to_s + "]",
+      :title => "Exposure of #{data[:cell_line]} cells",
+      :description => "#{data[:cell_line]} cells were exposed to increasing concentrations of test compounds. After 24 hours cell viability, CD86 expression and IL-8 production were determined. [Experiment Nr. " + data[:experiment][:number].to_s + "]",
       :workpackage => wp,
+      :ring_trial => ring_trial,
       :date => Date.today
     )
 
@@ -150,7 +154,7 @@ class Wp8UploadController <  ActionController::Base
     unless data[:solvent_concentration].to_f == 0
       solvent_concentration = Concentration.find_or_create_by_value_and_unit_id(data[:solvent_concentration], Unit.find_by_name("% vol/vol").id)
       dmso = Compound.find_by_name('DMSO')
-      solvent = Solvent.find_by_compound_id_and_concentration_id(dmso,solvent_concentration)
+      solvent = Solvent.find_or_create_by_compound_id_and_concentration_id(dmso,solvent_concentration)
     end
 
     bio_sample_name = 0
@@ -167,6 +171,7 @@ class Wp8UploadController <  ActionController::Base
         conc_unit = Unit.find_by_name("uM")
       end
 
+      neg_control_concentration = Concentration.find_or_create_by_value_and_unit_id(0, conc_unit.id)
       concentration = Concentration.find_or_create_by_value_and_unit_id(t[:concentration], conc_unit.id)
       treatment = nil
 
@@ -178,11 +183,23 @@ class Wp8UploadController <  ActionController::Base
       when "medium"
         compound = Compound.find_by_name("Medium")
         treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :experiment => experiment)
+        if solvent.nil? # create negative controls
+          data[:compound_ids].each do |id|
+            compound = Compound.find(id)
+            treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :concentration => neg_control_concentration, :solvent => solvent, :experiment => experiment)
+          end
+        end
       when 'LPS'
         compound = Compound.find_by_name("Lipopolysaccharide (LPS)")
         treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :experiment => experiment)
       when /DMSO/
-        treatment = Treatment.create(:duration => duration, :bio_sample => bio_sample, :solvent => solvent, :experiment => experiment) unless data[:solvent_concentration].to_i == 0
+        unless solvent.nil? # create negative controls
+          treatment = Treatment.create(:duration => duration, :bio_sample => bio_sample, :compound => solvent.compound, :concentration => solvent.concentration, :experiment => experiment) 
+          data[:compound_ids].each do |id|
+            compound = Compound.find(id)
+            treatment = Treatment.create(:compound => compound, :duration => duration, :bio_sample => bio_sample, :concentration => neg_control_concentration, :solvent => solvent, :experiment => experiment)
+          end
+        end
       end
 
       if treatment
@@ -208,7 +225,8 @@ class Wp8UploadController <  ActionController::Base
 
     end
 
-    redirect_to :action => :index
+    #ring_trial.create_plots
+    redirect_to :controller => :ring_trials, :action => :update, :id => ring_trial.id
     
   end
 

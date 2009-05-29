@@ -6,7 +6,7 @@ class Person < ActiveRecord::Base
 	belongs_to :organisation
 
 	def to_label
-    name = ''
+    name = 'unknown'
     if !first_name.blank?
       name = first_name + ' '
     end

@@ -1,0 +1,19 @@
+
+nctc template:
+	partners (contact person, organisation, adderess)
+	cell line
+	duration
+	solvents
+	title and description
+	# compounds/experiment
+	ppd concentration, solvent
+
+plots:
+
+later/maybe:
+	#uM => microMolar
+	#experiment replacement? no
+		#template
+done:
+test excel upload
+korrekte neg kontrollen

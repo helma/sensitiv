@@ -1,0 +1,5 @@
+#main
+  %h1= @ring_trial.name
+  Compounds:
+  = @ring_trial.compound_names
+  =# image_tag @ring_trial.dose_response_curves

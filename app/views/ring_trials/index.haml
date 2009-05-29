@@ -1,0 +1,19 @@
+#main
+  %h1 WP8 ring trial summaries
+  - @ring_trials.each do |rt|
+    %h2
+      Ring trial 
+      = rt.id 
+    %b Cell line:
+    = rt.name
+    %br
+      %b Endpoints: 
+      = rt.endpoint_names
+    %br
+      %b Compounds: 
+      = rt.compound_names
+    %p
+      = link_to "Dose response curves", :action => :show, :id => rt.id
+      (
+      = link_to "Controls", :action => :controls, :id => rt.id
+      )

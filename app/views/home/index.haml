@@ -13,6 +13,9 @@
       = link_to "Protocols:", :controller => 'protocols', :action => 'index'
       Read and submit Standard Operating Procedures
     %li
+      = link_to "Ring trials:", :controller => 'ring_trials', :action => :index
+      Results from WP8 ring trials
+    %li
       = link_to "Experiments:", :controller => 'experiments', :action => 'index'
       Browse and search experimental data.
     %li
@@ -37,44 +40,3 @@
   = mail_to "helma@in-silico.de", "C. Helma"
   for the internal database.
   
-/
-  <div id='main'>
-  <h2>News</h2>
-  <dl>
-  <dt>08/06/04<dd>
-  Questionnaire added<br/>
-  <dt>08/04/24<dd>
-  More experimental data added<br/>
-  Treatments added<br/>
-  Several bugfixes and improvements<br/>
-  <dt>08/04/18<dd>
-  Better integration of chemical and experimental information<br/>
-  Improved search facilities<br/>
-  New internal database structure<br/>
-  Data analysis temporarily disabled
-  <dt>08/03/17<dd>Auditing by WP leaders enabled<br/>
-  Data submission by group leaders enabled<br/>
-  <dt>08/03/06<dd>Updated to latest Opentox version<br/>
-  Display of disconnected structures enabled<br/>
-  <dt>07/10/15<dd>Experimental data analysis faciltities<br/>
-  Improved data submission<br/>
-  Improved help system with detailled guidelines for data submission<br/>
-  <dt>07/09/28<dd>Ticketing system for bug reports and feature requests<br/>
-  Background correction, normalisation and prefiltering of gene expressions<br/>
-  <dt>07/09/26<dd>Gene expressions added<br/>
-  <dt>07/09/18<dd>Cell lines/types added<br/>
-  Editing features enabled<br/>
-  <dt>07/08/29<dd>Improved structure display<br/>
-  Forum and raw data links disabled<br/>
-  Internal database generalisation to comply with the <haml:loud> link_to 'OpenTox', &amp;quot;http://www.opentox.org&amp;quot;</haml:loud> project<br/>
-  <dt>07/07/25<dd>Data submission forms<br/>
-  <dt>07/07/18<dd>Database reorganisation<br/>
-  <dt>07/07/12<dd>Structure editor <br/>
-  <dt>07/07/10<dd>New user interface <br/>
-  Training compounds <br/>
-  Initial import of gene expression data
-  <dt>07/06/19<dd>Extended FAQs
-  <dt>07/06/15<dd>Simple search facilities for compounds
-  <dt>07/05/23<dd>Internal database reimplemented with <haml:loud> link_to &amp;quot;Ruby on Rails&amp;quot;, &amp;quot;http://www.rubyonrails.org/&amp;quot; </haml:loud>
-  </dl>
-  </div>
