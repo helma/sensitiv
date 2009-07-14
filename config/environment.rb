@@ -4,14 +4,15 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.1.2'
+#RAILS_GEM_VERSION = '2.1.2'
+RAILS_GEM_VERSION = '2.3.2'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
 
 # R and Java configuration files 
-require "R.rb"
+require "#{RAILS_ROOT}/config/R.rb"
 
 Rails::Initializer.run do |config|
   config.plugins = [:all]
