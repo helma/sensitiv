@@ -1,0 +1,44 @@
+.active-scaffold
+  .show-view.view
+    = error_messages_for 'result'
+    %h4
+      Create or update result
+      = @result.name
+    %em
+      This is
+      %b not
+      the preferred form of data submission.
+    Please use one of our data submission templates to gain access to all searching, data mining, statistics and visualisation procedures.
+    - form_for :result, @result, :url => { :action => 'edit' }, :html => {:multipart => true} do |f|
+      %dl.form
+        %dt
+          %label{ :for => "record-name" }
+            Name
+        %dd= f.text_field :name
+        %dt
+          %label{ :for => "record-description" }
+            Description
+        %dd= f.text_area :description
+        %dt
+          %label{ :for => "record-workpackage" }
+            Workpackage
+        %dd= select(:result, :workpackage_id, Workpackage.find(:all).collect {|w| [ w.nr, w.nr ] })
+
+        %p Select the file with results (all formats are accepted) on your local computer. 
+
+      %dl.form
+
+        %dt
+          %label{ :for => "record-file" }
+            Upload results
+            = "(current file: #{File.basename(@result.file)})" if @result.file
+              
+        %dd= file_column_field "result", "file", :class => "document-input text-input",:id => "record_file"
+
+      %p.form-footer
+        = submit_tag as_('Update'), :class => "submit"
+        = link_to as_('Cancel'), params_for(:action => 'list'), :class => 'cancel'
+        = loading_indicator_tag(:action => :update, :id => params[:id])
+      %script{ :type => "text/javascript" }
+        Form.focusFirstElement('<haml:loud> element_form_id(:action => :update) </haml:loud>');
+
