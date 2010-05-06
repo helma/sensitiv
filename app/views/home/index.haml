@@ -13,11 +13,15 @@
       = link_to "Protocols:", :controller => 'protocols', :action => 'index'
       Read and submit Standard Operating Procedures
     %li
-      = link_to "Ring trials:", :controller => 'ring_trials', :action => :index
-      Results from WP8 ring trials
-    %li
       = link_to "Experiments:", :controller => 'experiments', :action => 'index'
       Browse and search experimental data.
+    %li
+      = link_to "Results:", :controller => 'results', :action => 'index'
+      Read and submit results from Sens-it-iv experiments. You can submit any format, but the data will be 
+      %b not
+      accessible for searching, data mining, statistics and visualisation.
+      %br Please use one of our data submission templates, if you want to use all database facilities.
+
     %li
       = link_to "Compounds:", :controller => 'compounds', :action => 'index'
       Information about chemicals for the Sens-it-iv project.
@@ -29,8 +33,12 @@
           = link_to "Training Compounds", :controller => 'compounds', :action => 'list', :show => 'training_set'
           Information about reference compounds (e.g. biological activities, solubility, toxicity)
     %li
-      = link_to "Data submission:", :controller => :file_upload
-      Submit data for workpackages 1 and 8
+      = link_to "Ring trials:", :controller => 'ring_trials', :action => :index
+      Results from WP8 ring trials
+    -#
+      %li
+        = link_to "Data submission:", :controller => :file_upload
+        Submit data for workpackages 1 and 8
 
   Please use the 
   = link_to 'Help', :controller => :help

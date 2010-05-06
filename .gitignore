@@ -1,6 +1,7 @@
 vendor/plugins/rchem
 vendor/plugins/rails-widgets
 vendor/plugins/haml
+config/mailer.rb
 public/data
 db/*sqlite3
 log/*.log

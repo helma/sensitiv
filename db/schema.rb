@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090520152826) do
+ActiveRecord::Schema.define(:version => 20100506103105) do
 
   create_table "bio_samples", :force => true do |t|
     t.string  "name"
@@ -145,8 +145,8 @@ ActiveRecord::Schema.define(:version => 20090520152826) do
     t.string "weight"
   end
 
-  add_index "human_interactions", ["unique_id_b"], :name => "index_human_interactions_on_unique_id_b"
   add_index "human_interactions", ["unique_id_a"], :name => "index_human_interactions_on_unique_id_a"
+  add_index "human_interactions", ["unique_id_b"], :name => "index_human_interactions_on_unique_id_b"
 
   create_table "individuals", :force => true do |t|
     t.string "name"
@@ -219,6 +219,16 @@ ActiveRecord::Schema.define(:version => 20090520152826) do
     t.integer "protocol_id"
   end
 
+  create_table "results", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "file"
+    t.integer  "workpackage_id"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "ring_trials", :force => true do |t|
     t.string   "name"
     t.string   "endpoint_names"
@@ -236,8 +246,8 @@ ActiveRecord::Schema.define(:version => 20090520152826) do
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "sexes", :force => true do |t|
     t.string "name"

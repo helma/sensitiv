@@ -1,6 +1,6 @@
 class CompoundsController < ApplicationController
 
-  require 'rjb'
+  #require 'rjb'
 
 	active_scaffold :compound do |config|
 
@@ -91,6 +91,7 @@ class CompoundsController < ApplicationController
     end
   end
 
+=begin
   def display_smiles_with_fragments
     
     # sanitize smiles
@@ -110,12 +111,16 @@ class CompoundsController < ApplicationController
 
     begin
       smiles = params[:smiles].chomp.gsub(/\s+/,'')
-      image =  Net::HTTP.post_form(URI.parse('http://webservices.in-silico.de/cdk-structure-visualizer/display'), {'smiles'=>smiles}).body
-      send_data(image, :type => "image/png", :disposition => "inline", :filename => "molecule.png")
+      #image =  Net::HTTP.post_form(URI.parse('http://webservices.in-silico.de/cdk-structure-visualizer/display'), {'smiles'=>smiles}).body
+      #send_data(image, :type => "image/png", :disposition => "inline", :filename => "molecule.png")
+			h = Net::HTTP.new("cactus.nci.nih.gov")
+			resp, data = h.get("/chemical/structure/#{smiles}/image")
+			data
     rescue
       render :text => smiles
     end
 
 	end
+=end
 
 end

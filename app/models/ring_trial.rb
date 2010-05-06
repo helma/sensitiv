@@ -1,4 +1,5 @@
-require "rinruby"
+require "lib/rinruby.rb"
+#require File.join(ENV['RAILS_ROOT'],"lib/rinruby.rb")
 
 class File
   def original_filename

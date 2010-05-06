@@ -31,11 +31,11 @@ class ProtocolsController < ApplicationController
         audit_check
         add_experiment
         if @protocol.save
-          flash[:notice] = "Update of #{@protocol.name} successful"
+          flash[:notice] = "Creation of #{@protocol.name} successful"
           redirect_to :action => :list, :id => @protocol.id
           return
         else
-          flash[:notice] = "Update of #{@protocol.name} failed"
+          flash[:notice] = "Creation of #{@protocol.name} failed"
           # redisplay form
         end
       else

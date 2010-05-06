@@ -15,9 +15,9 @@ config.action_controller.consider_all_requests_local = false
 # config.action_controller.asset_host                  = "http://assets.example.com"
 
 # Disable delivery errors if you bad email addresses should just be ignored
-# config.action_mailer.raise_delivery_errors = false
+config.action_mailer.raise_delivery_errors = false
 # fix to avoid redirect problem
 #config.after_initialize {
-#  Dependencies.load_once_paths = Dependencies.load_once_paths.select { |path| (path =~ /app/).nil? }
+#  ActiveSupport::Dependencies.load_once_paths = ActiveSupport::Dependencies.load_once_paths.select { |path| (path =~ /app/).nil? }
 #}
 #

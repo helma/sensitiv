@@ -2,7 +2,8 @@ module CompoundsHelper
 
 	def smiles_column(record)
     if !record.smiles.blank?
-      display_smiles(record.smiles)
+      image_tag "http://cactus.nci.nih.gov/chemical/structure/#{URI.escape(record.smiles)}/image", :alt => record.smiles
+      #display_smiles(record.smiles)
     else
       '-'
     end
