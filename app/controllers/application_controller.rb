@@ -3,8 +3,8 @@
 
 class ApplicationController < ActionController::Base
 
-	before_filter :authorize, :except => [:login]
-  before_filter :authorize_write, :only => [:new, :new_existing, :create, :edit, :update, :delete]
+	before_filter :authorize, :except => [:login, :wp8_upload]
+  before_filter :authorize_write, :only => [:new, :new_existing, :create, :edit, :update, :delete], :except => [:wp8_upload]
 
   layout 'sensitiv'
 

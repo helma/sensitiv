@@ -19,6 +19,7 @@ class RingTrial < ActiveRecord::Base
   file_column :dose_response_curves
   file_column :control_dose_response_curves
 
+=begin
   def create_plots
 
     puts "Searching for treatments ..."
@@ -69,6 +70,7 @@ class RingTrial < ActiveRecord::Base
     puts "Creating R data frame ..."
     tmp_compounds = "#{RAILS_ROOT}/tmp/compounds.pdf"
     R.eval "library('ggplot2')"
+    R.eval "d <- c(1,1)"
     R.eval "data <- read.delim('#{RAILS_ROOT}/tmp/compounds.tab')"
     R.eval "data$endpoints <- factor(data$endpoints, levels=c('Cell survival [%]', 'CD86 RFI' ,'CD86 positive cells [%]', 'CD86 stimulation index', 'CXCL8 relative production [pg/mL/10^6 cells]'))"
 
@@ -112,5 +114,6 @@ class RingTrial < ActiveRecord::Base
     self.update_attribute(:control_dose_response_curves , file)
     file.close
   end
+=end
 
 end

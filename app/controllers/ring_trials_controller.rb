@@ -15,7 +15,7 @@ class RingTrialsController < ApplicationController
   end
 
   def update
-    RingTrial.find(params[:id]).create_plots
+    #RingTrial.find(params[:id]).create_plots
     redirect_to :action => :index
   end
 
